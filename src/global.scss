@@ -1,0 +1,7 @@
+html,
+#svelte,
+body {
+	height: 100%;
+}
+$enable-important-utilities: false;
+@import '../node_modules/bootstrap/scss/bootstrap';
