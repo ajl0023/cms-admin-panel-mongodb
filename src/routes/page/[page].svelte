@@ -1,24 +1,38 @@
 <script context="module">
+	import Bts from '$lib/Bts/Bts.svelte';
+	import CarouselRenders from '$lib/CarouselRenders/CarouselRenders.svelte';
+	import EditBar from '$lib/EditBar/EditBar.svelte';
+	import EntryModal from '$lib/EntryModal/EntryModal.svelte';
+	import { entryModalStore } from '$lib/EntryModal/entryModalStore';
+	import ImagePage from '$lib/ImagePage/ImagePage.svelte';
+	import MobilePages from '$lib/MobilePages/MobilePages.svelte';
+	import PageCarousels from '$lib/PageCarousels/PageCarousels.svelte';
+	import { deleteHook } from '$lib/stores/deleteHook-store';
 	import { tableStore } from '$lib/tableStore';
+	import { onMount } from 'svelte';
+	import { hostName } from '../../host';
 
 	export async function load({ params, fetch, session, stuff }) {
+		deleteHook.init();
 		const page_id = params.page;
 
 		let categoryReq;
 		tableStore.update((s) => {
 			s.currentTable = s.categories[page_id];
 			categoryReq = s.categories[page_id].category;
+
 			return s;
 		});
 
 		const res = await fetch(`${hostName}/api/${categoryReq}`);
 
 		const body = await res.json();
-
+		console.log(body, 55);
 		if (res.ok) {
 			return {
 				status: 200,
 				props: {
+					deleted: [],
 					currentPage: categoryReq,
 					page: body
 				}
@@ -32,53 +46,15 @@
 </script>
 
 <script>
-	import EntryModal from '$lib/EntryModal/EntryModal.svelte';
-	import { entryModalStore } from '$lib/EntryModal/entryModalStore';
-	import TableRow from '$lib/TableRow.svelte';
-	import { tableStoreDrag } from '$lib/tableStoreDrag';
-	import _ from 'lodash';
-	import axios from 'axios';
-	import { onMount, tick } from 'svelte';
-	import EditBar from '$lib/EditBar/EditBar.svelte';
-	import ImagePage from '$lib/ImagePage/ImagePage.svelte';
-	import Bts from '$lib/Bts/Bts.svelte';
-	import CarouselRenders from '$lib/CarouselRenders/CarouselRenders.svelte';
-	import PageCarousels from '$lib/PageCarousels/PageCarousels.svelte';
-	import MobilePages from '$lib/MobilePages/MobilePages.svelte';
-	import { hostName } from '../../host';
+	import SelectedBar from '$lib/SelectedBar/SelectedBar.svelte';
+
 	export let page;
 	export let columns;
 	export let data;
 	export let cursor;
 	export let currentPage;
-	let scrollFetchEle;
-	let formatted;
-	let submitting = false;
-	let container;
-	let scrollFetch = false;
+	export let deleted;
 
-	function handleObserver() {
-		let options = {
-			root: container,
-			rootMargin: '0px',
-			threshold: 0.25
-		};
-
-		async function handleIntersect(entries, observer) {
-			entries.forEach(async (entry) => {
-				if (entry.isIntersecting && $tableStore.cursor.hasNext) {
-					scrollFetch = true;
-					const category = $tableStore.currentTable.orig;
-
-					const data = await tableStore.fetchData($tableStore.cursor.next, false);
-					rows = [...rows, ...data.rows];
-				}
-			});
-		}
-
-		let observer = new IntersectionObserver(handleIntersect, options);
-		observer.observe(scrollFetchEle);
-	}
 	const componentMap = {
 		'bg-pages': {
 			component: ImagePage,
@@ -102,60 +78,29 @@
 			options: ['Add photos']
 		}
 	};
-	// onMount(() => {
-	// 	const filtered = columns.filter((item) => {
-	// 		return !item.is_generated;
-	// 	});
 
-	// 	handleObserver();
-	// });
-
-	$: {
-		if (
-			$tableStoreDrag.draggingItemIndex != null &&
-			$tableStoreDrag.hoveredItemIndex != null &&
-			$tableStoreDrag.draggingItemIndex != $tableStoreDrag.hoveredItemIndex
-		) {
-			// swap items
-			[rows[$tableStoreDrag.draggingItemIndex], rows[$tableStoreDrag.hoveredItemIndex]] = [
-				rows[$tableStoreDrag.hoveredItemIndex],
-				rows[$tableStoreDrag.draggingItemIndex]
-			];
-
-			// balance
-			$tableStoreDrag.draggingItemIndex = $tableStoreDrag.hoveredItemIndex;
-		}
-	}
-	// $: {
-	// 	console.log(rows);
-	// }
-
-	const handleSave = async () => {
-		// submitting = true;
-		// await tick();
-		// const order_updated = rows
-		// 	.filter((item) => {
-		// 		return item.data.new_index;
-		// 	})
-		// 	.map((item) => {
-		// 		return item.data;
-		// 	});
-		// const category = $tableStore.currentTable.orig;
-		// const res = await axios.put(`http://localhost:3000/api/category?category=${category}`, {
-		// 	reordered: order_updated
-		// });
-	};
+	onMount(() => {});
 </script>
 
 {#if $entryModalStore.visible}
 	<EntryModal />
 {/if}
+
 <div class="page-wrapper">
-	<EditBar options="{componentMap[currentPage].options}" />
-	<svelte:component this="{componentMap[currentPage].component}" pages="{page}" />
+	{#if $deleteHook.deleted.length > 0}
+		<SelectedBar />
+	{/if}
+
+	<div class="content-container">
+		<svelte:component this="{componentMap[currentPage].component}" pages="{page}" />
+	</div>
 </div>
 
 <style lang="scss">
+	.content-container {
+		margin-top: 30px;
+		overflow-y: auto;
+	}
 	.image-container {
 		width: 100px;
 		height: 100px;

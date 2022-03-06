@@ -17,32 +17,86 @@
 
 	onMount(async () => {
 		const currentTable = $entryModalStore.content;
-		console.log($tableStore.currentTable.category);
-		const editableFields =
-			$tableStore.currentTable.category === 'mobile'
-				? $tableStore.categories[currentTable.category].editableFields_mobile
-				: $tableStore.categories[currentTable.category].editableFields;
+		let editableFields;
+		console.log($entryModalStore.isInserting);
+		if (!$entryModalStore.isInserting) {
+			console.log($tableStore.categories[currentTable.category].editableFields_mobile);
+			editableFields =
+				$tableStore.currentTable.category === 'mobile'
+					? $tableStore.categories[currentTable.category].editableFields_mobile
+					: $tableStore.categories[currentTable.category].editableFields;
+		} else {
+			console.log($tableStore.currentTable);
+			editableFields =
+				$tableStore.currentTable.category === 'mobile'
+					? $tableStore.categories[currentTable.category].insertable.fields
+					: $tableStore.currentTable.insertable.fields;
+		}
 
 		fields = editableFields;
-		console.log($tableStore, 'fields');
+		console.log(fields);
 		await tick();
 	});
 
 	const handleSubmit = async () => {
+		if ($entryModalStore.action && $entryModalStore.action.name === 'replace_media') {
+			const objData = {
+				category: $tableStore.currentTable.category,
+				item: $entryModalStore.selected,
+				page: $entryModalStore.content._id,
+				page_category: $entryModalStore.content.category
+			};
+
+			const data = new FormData(form);
+			data.append('data', JSON.stringify(objData));
+
+			await axios.put(
+				`${hostName}/api/categories/media${
+					$tableStore.currentTable.category === 'mobile' ? `?mobile=${true}` : ''
+				}`,
+				data
+			);
+
+			return;
+		}
+
 		const data = new FormData(form);
 		const item_id = $entryModalStore.content._id;
-		console.log($entryModalStore.content._id);
-		data.append('_id', item_id);
 
-		if ($entryModalStore.content.page === 'behind-the-scenes') {
+		data.append('_id', item_id);
+		data.append(
+			'category',
+			$tableStore.currentTable.category === 'mobile'
+				? $entryModalStore.content.category
+				: $tableStore.currentTable._id
+		);
+		console.log($tableStore.currentTable);
+		if (
+			$entryModalStore.content.category === 'behind-the-scenes' ||
+			$entryModalStore.content.category === '62198a93ee6bf0f2610a1c31'
+		) {
+			if ($entryModalStore.isInserting) {
+				const value = Object.fromEntries(data.entries());
+				console.log(`${hostName}/api/${$tableStore.currentTable.category}`);
+				if ($tableStore.currentTable.category !== 'mobile') {
+					await axios.post(`${hostName}/api/${$tableStore.currentTable.category}`, data);
+				} else {
+					console.log('hello');
+					await axios.post(`${hostName}/api/mobile/behind-the-scenes`, data);
+				}
+				return;
+			}
 			const phase = $entryModalStore.content.phase;
 
 			data.append('phase', phase);
-
-			await axios.put(
-				`${hostName}/api/${$tableStore.currentTable.category}/behind-the-scenes`,
-				data
-			);
+			if ($tableStore.currentTable.category === 'mobile') {
+				await axios.put(
+					`${hostName}/api/${$tableStore.currentTable.category}/behind-the-scenes`,
+					data
+				);
+			} else {
+				await axios.put(`${hostName}/api/behind-the-scenes`, data);
+			}
 			return;
 		}
 
@@ -56,53 +110,66 @@
 	}}"
 	class="wrapper"
 >
-	<div
-		on:click="{(e) => {
-			e.stopPropagation();
-		}}"
-		class="form-container"
-	>
-		<form bind:this="{form}" class="row g-3" id="entry-form" action="">
-			{#each fields as field}
-				{#if field.type === 'media' && field.multi}
-					<div class="form-field">
-						<label for="{field.name}" class="form-label">{field.client_label}</label>
-						<input
-							bind:files="{$entryModalStore.files[field.lowerCase]}"
-							class="form-control"
-							type="file"
-							name="{field.name}"
-							id="formFileMultiple"
-							multiple
-						/>
-					</div>
-				{:else if field.type === 'media' && !field.multi}
-					<div class="form-field">
-						<label for="{field.name}" class="form-label">{field.client_label}</label>
-						<input
-							name="{field.name}"
-							bind:files="{$entryModalStore.files[field.lowerCase]}"
-							class="form-control"
-							type="file"
-							id="formFile"
-						/>
-					</div>
-				{:else}
-					<div class="form-field">
-						<label for="{field.name}" class="form-label">{field.client_label}</label>
-						<input
-							bind:value="{$entryModalStore.inputs[field.lowerCase]}"
-							class="form-control"
-							placeholder=""
-						/>
-					</div>
-				{/if}
-			{/each}
-			<div class="col-auto">
-				<button on:click="{handleSubmit}" type="button" class="btn btn-primary mb-3">Submit</button>
-			</div>
-		</form>
-	</div>
+	{#if $entryModalStore.action && $entryModalStore.action.name === 'replace_media'}
+		<div
+			on:click="{(e) => {
+				e.stopPropagation();
+			}}"
+			class="form-container"
+		>
+			<form bind:this="{form}" class="row g-3" id="entry-form" action="">
+				<div class="form-field">
+					<label for="image" class="form-label">image</label>
+					<input for="image" name="image" class="form-control" type="file" id="formFile" />
+				</div>
+
+				<div class="col-auto">
+					<button on:click="{handleSubmit}" type="button" class="btn btn-primary mb-3"
+						>Submit</button
+					>
+				</div>
+			</form>
+		</div>
+	{:else}
+		<div
+			on:click="{(e) => {
+				e.stopPropagation();
+			}}"
+			class="form-container"
+		>
+			<form bind:this="{form}" class="row g-3" id="entry-form" action="">
+				{#each fields as field}
+					{#if field.type === 'media' && field.multi}
+						<div class="form-field">
+							<label for="{field.name}" class="form-label">{field.client_label}</label>
+							<input
+								class="form-control"
+								type="file"
+								name="{field.name}"
+								id="{field.name}"
+								multiple
+							/>
+						</div>
+					{:else if field.type === 'media' && !field.multi}
+						<div class="form-field">
+							<label for="{field.name}" class="form-label">{field.client_label}</label>
+							<input name="{field.name}" class="form-control" type="file" id="formFile" />
+						</div>
+					{:else}
+						<div class="form-field">
+							<label for="{field.name}" class="form-label">{field.client_label}</label>
+							<input name="{field.name}" class="form-control" placeholder="" />
+						</div>
+					{/if}
+				{/each}
+				<div class="col-auto">
+					<button on:click="{handleSubmit}" type="button" class="btn btn-primary mb-3"
+						>Submit</button
+					>
+				</div>
+			</form>
+		</div>
+	{/if}
 </div>
 
 <style lang="scss">

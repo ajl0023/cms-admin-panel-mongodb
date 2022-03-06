@@ -2,30 +2,26 @@
 </script>
 
 <script>
-	import _ from 'lodash';
-	import { onMount, tick } from 'svelte';
-	import axios from 'axios';
-	import { tableStore } from '$lib/tableStore';
+	import CategoryImage from '$lib/CategoryImage/CategoryImage.svelte';
+	import EditBar from '$lib/EditBar/EditBar.svelte';
 	import { entryModalStore } from '$lib/EntryModal/entryModalStore';
+	import { deleteHook } from '$lib/stores/deleteHook-store';
+	import { tableStore } from '$lib/tableStore';
+	import _ from 'lodash';
+	import { onMount } from 'svelte';
 	export let pages;
-
+	console.log(pages);
 	onMount(async () => {});
 </script>
 
 {#each pages as item}
 	{#if $tableStore.currentTable.type === 'bg-image'}
-		<div
-			on:click="{() => {
-				entryModalStore.handleVisible(item);
-			}}"
-			class="item-container"
-		>
+		<div class="item-container">
 			<div class="page-title">
 				{_.startCase(item.page)}
 			</div>
-			<div class="image-container">
-				<img src="{item.url}" alt="" />
-			</div>
+			<EditBar data="{item}" options="{['Edit Photos']}" />
+			<CategoryImage img="{item.image}" col="image" page="{item}" />
 		</div>
 	{/if}
 {/each}

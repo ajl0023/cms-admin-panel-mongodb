@@ -11,6 +11,7 @@
 
 	export let options;
 	export let data;
+	export let isInserting;
 </script>
 
 <div class="wrapper">
@@ -19,7 +20,9 @@
 			<button
 				on:click="{() => {
 					$entryModalStore.visible = true;
+					$entryModalStore.isInserting = isInserting;
 					$entryModalStore.content = data;
+					$entryModalStore.action = option.action;
 				}}"
 				class="btn btn-primary"
 				>{option}

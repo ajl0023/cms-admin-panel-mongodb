@@ -6,11 +6,9 @@
 	import { onMount, tick } from 'svelte';
 	import axios from 'axios';
 	import EditBar from '$lib/EditBar/EditBar.svelte';
+	import { deleteHook } from '$lib/stores/deleteHook-store';
+	import CategoryImage from '$lib/CategoryImage/CategoryImage.svelte';
 	export let pages;
-
-	onMount(async () => {
-		console.log(pages);
-	});
 </script>
 
 <div class="wrapper">
@@ -28,9 +26,7 @@
 					</div>
 					<div class="images-container">
 						{#each page.images as img}
-							<div class="image-container">
-								<img src="{img.url}" alt="" />
-							</div>
+							<CategoryImage img="{img}" page="{page}" col="images" />
 						{/each}
 					</div>
 				</div>

@@ -1,32 +1,13 @@
 <script>
-	import { onMount, tick } from 'svelte';
-	import { DragGesture } from '@use-gesture/vanilla';
-
-	import { tableStoreDrag } from './tableStoreDrag';
+	import { onMount } from 'svelte';
 	import DragHandle from './svgs/DragHandle.svelte';
-	import _ from 'lodash';
-	export let item;
-	export let i;
-	export let submitting;
-	export let changed;
-	export let data;
-	let originalIndex = i;
+	import { tableStoreDrag } from './tableStoreDrag';
 
-	// $: {
-	// 	data['data']['sort_index'] = i;
-	// }
-	// $: {
-	// 	if (submitting && originalIndex !== i) {
-	// 		data['data']['new_index'] = true;
-	// 		originalIndex = i;
-	// 		// console.log(i, 'has changed');
-	// 	}
-	// }
+	export let i;
+
+	export let data;
 
 	let row;
-	console.log(row);
-	let top;
-	let mouseYCoordinate;
 
 	onMount(() => {});
 </script>
