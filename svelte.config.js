@@ -10,7 +10,7 @@ const config = {
 		adapter: adapter({
 			// default options are shown
 
-			fallback: 'test.html'
+			fallback: 'index.html'
 		}),
 
 		// hydrate the <div id="svelte"> element in src/app.html
