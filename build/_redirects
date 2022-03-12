@@ -1,6 +1,3 @@
 
 
-/page/:1 /.netlify/functions/page-_1 200
-/api/categories /.netlify/functions/api-categories 200
-/api/collection /.netlify/functions/api-collection 200
-/api/category /.netlify/functions/api-category 200
+* /.netlify/functions/render 200
