@@ -7,7 +7,7 @@ const config = {
 	preprocess: preprocess({}),
 
 	kit: {
-		adapter: adapter({ split: false }),
+		adapter: adapter({ split: true }),
 
 		vite: {
 			resolve: {
