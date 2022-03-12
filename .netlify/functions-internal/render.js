@@ -5,7 +5,7 @@ exports.handler = init({
 	assets: new Set(["favicon.png","robots.txt","svelte-welcome.png","svelte-welcome.webp"]),
 	_: {
 		mime: {".png":"image/png",".txt":"text/plain",".webp":"image/webp"},
-		entry: {"file":"start-368917c6.js","js":["start-368917c6.js","chunks/vendor-bf419eb7.js","chunks/preload-helper-e4860ae8.js"],"css":[]},
+		entry: {"file":"start-c6a8cd88.js","js":["start-c6a8cd88.js","chunks/vendor-bf419eb7.js","chunks/preload-helper-e4860ae8.js"],"css":[]},
 		nodes: [
 			() => Promise.resolve().then(() => require('../server/nodes/0.js')),
 			() => Promise.resolve().then(() => require('../server/nodes/1.js')),
