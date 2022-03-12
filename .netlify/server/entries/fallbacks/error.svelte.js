@@ -22,15 +22,27 @@ var __toCommonJS = /* @__PURE__ */ ((cache) => {
 })(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
 var stdin_exports = {};
 __export(stdin_exports, {
-  default: () => import_page_af03ff04.U,
-  load: () => import_page_af03ff04.l
+  default: () => Error2,
+  load: () => load
 });
-var import_index_92880a40 = require("../../../chunks/index-92880a40.js");
-var import_page_af03ff04 = require("../../../chunks/_page_-af03ff04.js");
-var import_collectionStore_store_96f51f08 = require("../../../chunks/collectionStore-store-96f51f08.js");
-var import_axios = require("axios");
-var import_cookie = require("cookie");
-var import_uuid = require("@lukeed/uuid");
-var import_host_b5b4a144 = require("../../../chunks/host-b5b4a144.js");
-var import_lodash = require("lodash");
+var import_index_92880a40 = require("../../chunks/index-92880a40.js");
+function load({ error, status }) {
+  return { props: { error, status } };
+}
+const Error2 = (0, import_index_92880a40.c)(($$result, $$props, $$bindings, slots) => {
+  let { status } = $$props;
+  let { error } = $$props;
+  if ($$props.status === void 0 && $$bindings.status && status !== void 0)
+    $$bindings.status(status);
+  if ($$props.error === void 0 && $$bindings.error && error !== void 0)
+    $$bindings.error(error);
+  return `<h1>${(0, import_index_92880a40.f)(status)}</h1>
+
+<pre>${(0, import_index_92880a40.f)(error.message)}</pre>
+
+
+
+${error.frame ? `<pre>${(0, import_index_92880a40.f)(error.frame)}</pre>` : ``}
+${error.stack ? `<pre>${(0, import_index_92880a40.f)(error.stack)}</pre>` : ``}`;
+});
 module.exports = __toCommonJS(stdin_exports);

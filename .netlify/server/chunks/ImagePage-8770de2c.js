@@ -27,34 +27,39 @@ var __toCommonJS = /* @__PURE__ */ ((cache) => {
 })(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
 var stdin_exports = {};
 __export(stdin_exports, {
-  default: () => _layout,
-  load: () => load,
-  prerender: () => prerender
+  default: () => ImagePage
 });
-var import_index_92880a40 = require("../../chunks/index-92880a40.js");
-var import_collectionStore_store_96f51f08 = require("../../chunks/collectionStore-store-96f51f08.js");
-var import_StartModal_9f835d07 = __toESM(require("../../chunks/StartModal-9f835d07.js"));
-var import_Navbar_33fc9826 = __toESM(require("../../chunks/Navbar-33fc9826.js"));
-var import_host_b5b4a144 = require("../../chunks/host-b5b4a144.js");
+var import_index_92880a40 = require("./index-92880a40.js");
+var import_collectionStore_store_96f51f08 = require("./collectionStore-store-96f51f08.js");
+var import_lodash = __toESM(require("lodash"));
+var import_CategoryImage_239f1e64 = __toESM(require("./CategoryImage-239f1e64.js"));
+var import_page_af03ff04 = require("./_page_-af03ff04.js");
+var import_host_b5b4a144 = require("./host-b5b4a144.js");
 var import_axios = require("axios");
-var import_lodash = require("lodash");
-var global = "";
-var __layout_svelte_svelte_type_style_lang = "";
-const css = {
-  code: ".wrapper.svelte-hkifws{overflow-y:auto;height:100%;display:flex}",
-  map: null
-};
-const prerender = true;
-async function load({ fetch, stuff, session }) {
-  return {};
-}
-const _layout = (0, import_index_92880a40.c)(($$result, $$props, $$bindings, slots) => {
+var import_cookie = require("cookie");
+var import_uuid = require("@lukeed/uuid");
+const ImagePage = (0, import_index_92880a40.c)(($$result, $$props, $$bindings, slots) => {
   let $collectionStore, $$unsubscribe_collectionStore;
   $$unsubscribe_collectionStore = (0, import_index_92880a40.a)(import_collectionStore_store_96f51f08.c, (value) => $collectionStore = value);
-  $$result.css.add(css);
+  let { items } = $$props;
+  if ($$props.items === void 0 && $$bindings.items && items !== void 0)
+    $$bindings.items(items);
   $$unsubscribe_collectionStore();
-  return `<div class="${"wrapper svelte-hkifws"}">${!$collectionStore.collection ? `${(0, import_index_92880a40.v)(import_StartModal_9f835d07.default, "StartModal").$$render($$result, {}, {}, {})}` : `${(0, import_index_92880a40.v)(import_Navbar_33fc9826.default, "Navbar").$$render($$result, {}, {}, {})}
-		${slots.default ? slots.default({}) : ``}`}
-</div>`;
+  return `${(0, import_index_92880a40.e)(items, (item) => {
+    return `<div class="${"item-container"}"><div class="${"page-title"}">${(0, import_index_92880a40.f)(import_lodash.default.startCase(item.page))}</div>
+
+		${(0, import_index_92880a40.v)(import_page_af03ff04.E, "EditBar").$$render($$result, {
+      method: "put",
+      data: item,
+      options: $collectionStore.categories[item.category].endpoints
+    }, {}, {})}
+
+		${(0, import_index_92880a40.v)(import_CategoryImage_239f1e64.default, "CategoryImage").$$render($$result, {
+      img: item.image,
+      col: "image",
+      page: item
+    }, {}, {})}
+	</div>`;
+  })}`;
 });
 module.exports = __toCommonJS(stdin_exports);

@@ -22,13 +22,13 @@ var __toCommonJS = /* @__PURE__ */ ((cache) => {
 })(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
 var stdin_exports = {};
 __export(stdin_exports, {
-  a: () => escape,
-  b: () => subscribe,
+  a: () => subscribe,
+  b: () => safe_not_equal,
   c: () => create_ssr_component,
-  d: () => safe_not_equal,
+  d: () => add_attribute,
   e: () => each,
-  f: () => add_attribute,
-  g: () => set_store_value,
+  f: () => escape,
+  g: () => get_store_value,
   m: () => missing_component,
   n: () => noop,
   s: () => setContext,
@@ -55,9 +55,10 @@ function subscribe(store, ...callbacks) {
   const unsub = store.subscribe(...callbacks);
   return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
 }
-function set_store_value(store, ret, value) {
-  store.set(value);
-  return ret;
+function get_store_value(store) {
+  let value;
+  subscribe(store, (_) => value = _)();
+  return value;
 }
 let current_component;
 function set_current_component(component) {

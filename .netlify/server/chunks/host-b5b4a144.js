@@ -22,15 +22,11 @@ var __toCommonJS = /* @__PURE__ */ ((cache) => {
 })(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
 var stdin_exports = {};
 __export(stdin_exports, {
-  default: () => import_page_af03ff04.U,
-  load: () => import_page_af03ff04.l
+  h: () => hostName
 });
-var import_index_92880a40 = require("../../../chunks/index-92880a40.js");
-var import_page_af03ff04 = require("../../../chunks/_page_-af03ff04.js");
-var import_collectionStore_store_96f51f08 = require("../../../chunks/collectionStore-store-96f51f08.js");
-var import_axios = require("axios");
-var import_cookie = require("cookie");
-var import_uuid = require("@lukeed/uuid");
-var import_host_b5b4a144 = require("../../../chunks/host-b5b4a144.js");
-var import_lodash = require("lodash");
+let host;
+{
+  host = "http://test12312312356415616.store";
+}
+const hostName = host;
 module.exports = __toCommonJS(stdin_exports);

@@ -36,17 +36,18 @@ var __toCommonJS = /* @__PURE__ */ ((cache) => {
 })(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
 var stdin_exports = {};
 __export(stdin_exports, {
-  h: () => hostName,
-  t: () => tableStore,
+  c: () => collectionStore,
   w: () => writable
 });
-var import_index_c56b6a2a = require("./index-c56b6a2a.js");
+var import_host_b5b4a144 = require("./host-b5b4a144.js");
+var import_index_92880a40 = require("./index-92880a40.js");
+var import_axios = require("axios");
 const subscriber_queue = [];
-function writable(value, start = import_index_c56b6a2a.n) {
+function writable(value, start = import_index_92880a40.n) {
   let stop;
   const subscribers = /* @__PURE__ */ new Set();
   function set(new_value) {
-    if ((0, import_index_c56b6a2a.d)(value, new_value)) {
+    if ((0, import_index_92880a40.b)(value, new_value)) {
       value = new_value;
       if (stop) {
         const run_queue = !subscriber_queue.length;
@@ -66,11 +67,11 @@ function writable(value, start = import_index_c56b6a2a.n) {
   function update(fn) {
     set(fn(value));
   }
-  function subscribe(run, invalidate = import_index_c56b6a2a.n) {
+  function subscribe(run, invalidate = import_index_92880a40.n) {
     const subscriber = [run, invalidate];
     subscribers.add(subscriber);
     if (subscribers.size === 1) {
-      stop = start(set) || import_index_c56b6a2a.n;
+      stop = start(set) || import_index_92880a40.n;
     }
     run(value);
     return () => {
@@ -85,66 +86,17 @@ function writable(value, start = import_index_c56b6a2a.n) {
 }
 const store = () => {
   const state = {
-    currentTable: null,
-    tables: {},
-    columns: [],
-    categories: [],
-    cursor: null,
-    modalVisible: true
+    collection: null,
+    categories: []
   };
   const { subscribe, set, update } = writable(state);
   const methods = {
-    handleModal() {
+    async setCollection(coll) {
       update((s) => {
-        s.modalVisible = true;
+        s.collection = coll;
         return s;
       });
-    },
-    setCurrentTable(table) {
-      update((s) => {
-        s.currentTable = table;
-        return s;
-      });
-    },
-    async fetchData(next, load) {
-      const currentTable = state.currentTable;
-      const res = await fetch(`http://localhost:3000/api/category?category=${currentTable.orig}${next ? `&next=${next}` : ""}`);
-      const columnsRes = state.columns.length > 0 ? state.columns : await fetch(`http://localhost:3000/api/columns?category=${currentTable.orig}`);
-      const columns = state.columns.length > 0 ? state.columns : await columnsRes.json();
-      if (state.columns.length > 0) {
-        update((s) => {
-          s.columns = columns;
-          return s;
-        });
-      }
-      let rows = await res.json();
-      const cursor = rows.page;
-      update((s) => {
-        s.cursor = cursor;
-        return s;
-      });
-      const final_arr = [];
-      rows = rows.results.map((row) => {
-        const obj = {};
-        const arr = [];
-        for (const column of columns) {
-          arr.push({
-            column,
-            value: row[column.db_name]
-          });
-        }
-        obj["table_cols"] = arr;
-        obj["data"] = {
-          uid: row.uid
-        };
-        final_arr.push(obj);
-        return arr;
-      });
-      return {
-        rows: final_arr,
-        columns,
-        cursor
-      };
+      localStorage.setItem("collection", coll);
     }
   };
   return __spreadValues({
@@ -153,10 +105,5 @@ const store = () => {
     update
   }, methods);
 };
-const tableStore = store();
-let host;
-{
-  host = "http://147.182.193.194";
-}
-const hostName = host;
+const collectionStore = store();
 module.exports = __toCommonJS(stdin_exports);

@@ -1,6 +1,8 @@
+var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
 var __export = (target, all) => {
@@ -15,6 +17,9 @@ var __reExport = (target, module2, copyDefault, desc) => {
   }
   return target;
 };
+var __toESM = (module2, isNodeMode) => {
+  return __reExport(__markAsModule(__defProp(module2 != null ? __create(__getProtoOf(module2)) : {}, "default", !isNodeMode && module2 && module2.__esModule ? { get: () => module2.default, enumerable: true } : { value: module2, enumerable: true })), module2);
+};
 var __toCommonJS = /* @__PURE__ */ ((cache) => {
   return (module2, temp) => {
     return cache && cache.get(module2) || (temp = __reExport(__markAsModule({}), module2, 1), cache && cache.set(module2, temp), temp);
@@ -22,15 +27,40 @@ var __toCommonJS = /* @__PURE__ */ ((cache) => {
 })(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
 var stdin_exports = {};
 __export(stdin_exports, {
-  default: () => import_page_af03ff04.U,
-  load: () => import_page_af03ff04.l
+  get: () => get,
+  post: () => post
 });
-var import_index_92880a40 = require("../../../chunks/index-92880a40.js");
-var import_page_af03ff04 = require("../../../chunks/_page_-af03ff04.js");
-var import_collectionStore_store_96f51f08 = require("../../../chunks/collectionStore-store-96f51f08.js");
-var import_axios = require("axios");
-var import_cookie = require("cookie");
-var import_uuid = require("@lukeed/uuid");
-var import_host_b5b4a144 = require("../../../chunks/host-b5b4a144.js");
-var import_lodash = require("lodash");
+var import_cookie = __toESM(require("cookie"));
+async function get({ request }) {
+  const getCookie = request.headers.get("cookie");
+  if (getCookie) {
+    const currentCollection = import_cookie.default.parse(getCookie).collection;
+    if (currentCollection) {
+      return {
+        body: { collection: currentCollection }
+      };
+    }
+  }
+  return {
+    status: 403
+  };
+}
+async function post({ request }) {
+  const data = await request.json();
+  const collection = data.collection;
+  if (!collection) {
+    return {
+      status: 500
+    };
+  }
+  const new_cookie = import_cookie.default.serialize("collection", collection);
+  return {
+    headers: {
+      "set-cookie": [new_cookie]
+    },
+    body: JSON.stringify({
+      collection: data.collection
+    })
+  };
+}
 module.exports = __toCommonJS(stdin_exports);

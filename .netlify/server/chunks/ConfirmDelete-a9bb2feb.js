@@ -22,27 +22,15 @@ var __toCommonJS = /* @__PURE__ */ ((cache) => {
 })(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
 var stdin_exports = {};
 __export(stdin_exports, {
-  default: () => Error2,
-  load: () => load
+  default: () => ConfirmDelete
 });
-var import_index_c56b6a2a = require("../../chunks/index-c56b6a2a.js");
-function load({ error, status }) {
-  return { props: { error, status } };
-}
-const Error2 = (0, import_index_c56b6a2a.c)(($$result, $$props, $$bindings, slots) => {
-  let { status } = $$props;
-  let { error } = $$props;
-  if ($$props.status === void 0 && $$bindings.status && status !== void 0)
-    $$bindings.status(status);
-  if ($$props.error === void 0 && $$bindings.error && error !== void 0)
-    $$bindings.error(error);
-  return `<h1>${(0, import_index_c56b6a2a.a)(status)}</h1>
-
-<pre>${(0, import_index_c56b6a2a.a)(error.message)}</pre>
-
-
-
-${error.frame ? `<pre>${(0, import_index_c56b6a2a.a)(error.frame)}</pre>` : ``}
-${error.stack ? `<pre>${(0, import_index_c56b6a2a.a)(error.stack)}</pre>` : ``}`;
+var import_index_92880a40 = require("./index-92880a40.js");
+var import_lodash = require("lodash");
+var import_axios = require("axios");
+const ConfirmDelete = (0, import_index_92880a40.c)(($$result, $$props, $$bindings, slots) => {
+  let { pages } = $$props;
+  if ($$props.pages === void 0 && $$bindings.pages && pages !== void 0)
+    $$bindings.pages(pages);
+  return `<div class="${"wrapper"}"></div>`;
 });
 module.exports = __toCommonJS(stdin_exports);

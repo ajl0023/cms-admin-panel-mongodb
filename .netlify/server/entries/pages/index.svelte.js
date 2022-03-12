@@ -24,8 +24,8 @@ var stdin_exports = {};
 __export(stdin_exports, {
   default: () => Routes
 });
-var import_index_c56b6a2a = require("../../chunks/index-c56b6a2a.js");
-const Routes = (0, import_index_c56b6a2a.c)(($$result, $$props, $$bindings, slots) => {
+var import_index_92880a40 = require("../../chunks/index-92880a40.js");
+const Routes = (0, import_index_92880a40.c)(($$result, $$props, $$bindings, slots) => {
   return `<div class="${"container"}"></div>`;
 });
 module.exports = __toCommonJS(stdin_exports);

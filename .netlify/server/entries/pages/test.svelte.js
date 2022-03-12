@@ -22,15 +22,15 @@ var __toCommonJS = /* @__PURE__ */ ((cache) => {
 })(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
 var stdin_exports = {};
 __export(stdin_exports, {
-  default: () => import_page_af03ff04.U,
-  load: () => import_page_af03ff04.l
+  default: () => Test,
+  load: () => load
 });
-var import_index_92880a40 = require("../../../chunks/index-92880a40.js");
-var import_page_af03ff04 = require("../../../chunks/_page_-af03ff04.js");
-var import_collectionStore_store_96f51f08 = require("../../../chunks/collectionStore-store-96f51f08.js");
-var import_axios = require("axios");
-var import_cookie = require("cookie");
-var import_uuid = require("@lukeed/uuid");
-var import_host_b5b4a144 = require("../../../chunks/host-b5b4a144.js");
-var import_lodash = require("lodash");
+var import_index_92880a40 = require("../../chunks/index-92880a40.js");
+async function load({ fetch, stuff, session }) {
+  await fetch("/api/categories");
+  return {};
+}
+const Test = (0, import_index_92880a40.c)(($$result, $$props, $$bindings, slots) => {
+  return `<div>sdfsdfsdfsdfsdfsd</div>`;
+});
 module.exports = __toCommonJS(stdin_exports);
