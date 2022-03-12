@@ -4,12 +4,15 @@ import { get, writable } from 'svelte/store';
 
 const store = () => {
 	const state = {
-		
+		category: null,
+		data: {}
 	};
 	const { subscribe, set, update } = writable(state);
 
 	const methods = {
-		
+		isMobile() {
+			return state.category.category === 'mobile';
+		}
 	};
 	return {
 		subscribe,
@@ -19,4 +22,4 @@ const store = () => {
 	};
 };
 
-export const {{store}}_store = store();
+export const categoryStore = store();

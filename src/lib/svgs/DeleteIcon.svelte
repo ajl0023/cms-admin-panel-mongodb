@@ -1,12 +1,16 @@
 <script>
+	import { categoryStore } from '$lib/stores/category-store';
+
 	import { deleteHook } from '$lib/stores/deleteHook-store';
-	import { tableStore } from '$lib/tableStore';
+	import { tableStore } from '$lib/stores/tableStore';
 </script>
 
 <div class="icon">
 	<svg
 		on:click="{() => {
-			deleteHook.handleDelete($tableStore.currentTable.category);
+			$categoryStore.category.category === 'mobile'
+				? deleteHook.handleDeleteMobile()
+				: deleteHook.handleDelete();
 		}}"
 		xmlns="http://www.w3.org/2000/svg"
 		height="24px"

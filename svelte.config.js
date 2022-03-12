@@ -1,5 +1,5 @@
 import adapter from '@sveltejs/adapter-static';
-
+import path from 'path';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -9,9 +9,15 @@ const config = {
 	kit: {
 		adapter: adapter({
 			// default options are shown
-
 			fallback: 'index.html'
 		}),
+		vite: {
+			resolve: {
+				alias: {
+					src: path.resolve('./src')
+				}
+			}
+		},
 
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
@@ -21,14 +27,12 @@ const config = {
 			allowed: ['PATCH', 'DELETE']
 		}
 	},
-	vite: {
-		server: {
-			proxy: {
-				'/api': {
-					target: 'http://localhost:3000',
-					changeOrigin: true
-				}
-			}
+	server: {
+		hmr: {
+			// Internal port (in container same as sveltekit port).
+			port: 3000,
+			// External port (Docker host)
+			clientPort: 3001
 		}
 	}
 };

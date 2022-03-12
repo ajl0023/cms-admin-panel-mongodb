@@ -1,84 +1,74 @@
 <script context="module">
-	import Bts from '$lib/Bts/Bts.svelte';
-	import CarouselRenders from '$lib/CarouselRenders/CarouselRenders.svelte';
-	import EditBar from '$lib/EditBar/EditBar.svelte';
-	import EntryModal from '$lib/EntryModal/EntryModal.svelte';
-	import { entryModalStore } from '$lib/EntryModal/entryModalStore';
-	import ImagePage from '$lib/ImagePage/ImagePage.svelte';
-	import MobilePages from '$lib/MobilePages/MobilePages.svelte';
-	import PageCarousels from '$lib/PageCarousels/PageCarousels.svelte';
-	import { deleteHook } from '$lib/stores/deleteHook-store';
-	import { tableStore } from '$lib/tableStore';
+	import { collectionStore } from '$lib/stores/collectionStore-store';
+	import { entryModalStore } from '$lib/stores/entryModalStore';
 	import { onMount } from 'svelte';
-	import { hostName } from '../../host';
-
+	import { get } from 'svelte/store';
+	categoryStore;
 	export async function load({ params, fetch, session, stuff }) {
-		deleteHook.init();
 		const page_id = params.page;
-
-		let categoryReq;
-		tableStore.update((s) => {
-			s.currentTable = s.categories[page_id];
-			categoryReq = s.categories[page_id].category;
-
+		const categories = get(collectionStore).categories;
+		const category = categories[page_id];
+		categoryStore.update((s) => {
+			s.category = category;
 			return s;
 		});
-
-		const res = await fetch(`${hostName}/api/${categoryReq}`);
-
-		const body = await res.json();
-		console.log(body, 55);
-		if (res.ok) {
-			return {
-				status: 200,
-				props: {
-					deleted: [],
-					currentPage: categoryReq,
-					page: body
-				}
-			};
-		}
+		const res = await fetch(`/api/category?category=${category.category}`);
+		const data = await res.json();
 		return {
-			status: 404,
-			error: new Error(`Could not load`)
+			props: {
+				data,
+				category: category.category
+			}
 		};
 	}
 </script>
 
 <script>
-	import SelectedBar from '$lib/SelectedBar/SelectedBar.svelte';
+	import EntryModal from '$lib/components/EntryModal/EntryModal.svelte';
+	import { categoryStore } from '$lib/stores/category-store';
+	import { deleteHook } from '$lib/stores/deleteHook-store';
+	import SelectedBar from '$lib/components/SelectedBar/SelectedBar.svelte';
+	import EditBar from '$lib/components/EditBar/EditBar.svelte';
 
-	export let page;
-	export let columns;
 	export let data;
-	export let cursor;
-	export let currentPage;
-	export let deleted;
-
+	export let category;
+	let component;
+	$: category, getComponent();
 	const componentMap = {
 		'bg-pages': {
-			component: ImagePage,
+			component: 'ImagePage',
 			options: []
 		},
 
 		'behind-the-scenes': {
-			component: Bts,
+			component: 'Bts',
 			options: ['Add Phase']
 		},
 		'carousel-renders': {
-			component: CarouselRenders,
+			component: 'CarouselRenders',
 			options: ['Add photos']
 		},
 		'page-carousels': {
-			component: PageCarousels,
+			component: 'PageCarousels',
 			options: ['Add photos']
 		},
 		mobile: {
-			component: MobilePages,
+			component: 'MobilePages',
 			options: ['Add photos']
 		}
 	};
+	async function getComponent() {
+		component = null;
+		const componentName = componentMap[category].component;
 
+		const import_component = await import(
+			`../../lib/components/${componentName}/${componentName}.svelte`
+		);
+
+		component = import_component.default;
+
+		return import_component;
+	}
 	onMount(() => {});
 </script>
 
@@ -90,9 +80,14 @@
 	{#if $deleteHook.deleted.length > 0}
 		<SelectedBar />
 	{/if}
-
+	{#if $categoryStore.category.insertable}
+		<EditBar
+			data="{$categoryStore.category}"
+			options="{$categoryStore.category.insertable.endpoints}"
+		/>
+	{/if}
 	<div class="content-container">
-		<svelte:component this="{componentMap[currentPage].component}" pages="{page}" />
+		<svelte:component this="{component}" items="{data}" />
 	</div>
 </div>
 

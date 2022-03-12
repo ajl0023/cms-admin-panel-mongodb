@@ -1,8 +1,9 @@
-import { entryModalStore } from '$lib/EntryModal/entryModalStore';
-import { tableStore } from '$lib/tableStore';
+import { tableStore } from '$lib/stores/tableStore';
 import axios from 'axios';
 import { get, writable } from 'svelte/store';
 import { hostName } from '../../host';
+import { categoryStore } from './category-store';
+import { collectionStore } from './collectionStore-store';
 //from https://github.com/codrops/MarqueeMenu/blob/main/src/js/menuItem.js#L29
 
 const store = () => {
@@ -18,102 +19,92 @@ const store = () => {
 				return storeCopy;
 			});
 		},
-		async handleDelete(category) {
-			let formatted;
+		async handleDelete() {
+			const promises = [];
 			update((s) => {
-				formatted = s.deleted.reduce((acc, item) => {
-					if (category === 'mobile') {
-						if (!acc[item.page._id]) {
-							acc[item.page._id] = [
-								{
-									_id: item.image_id,
-									category: item.page.category
-								}
-							];
-						} else {
-							acc[item.page._id].push({
-								_id: item.image_id,
-								category: item.page.category
-							});
-						}
-					} else if (category !== 'carousel-renders') {
-						if (!acc[item.page._id]) {
-							acc[item.page._id] = [item.image_id];
-						} else {
-							acc[item.page._id].push(item.image_id);
-						}
+				const category = get(categoryStore).category;
+				const isBts = get(categoryStore);
+				const del_route = category.endpoints.find((item) => {
+					return item.method === 'DELETE' && item.type === 'media';
+				});
+				const deleted_items_toObj = s.deleted.reduce((acc, b) => {
+					if (!acc[b.page_id]) {
+						acc[b.page_id] = {};
+						acc[b.page_id]['items'] = [
+							{
+								_id: b.image_id,
+								column: b.column
+							}
+						];
 					} else {
-						if (!acc[item.page._id]) {
-							acc[item.page._id] = [
-								{
-									_id: item.image_id,
-									col: item.col
-								}
-							];
-						} else {
-							acc[item.page._id].push({
-								_id: item.image_id,
-								col: item.col
-							});
+						acc[b.page_id]['items'].push({
+							_id: b.image_id,
+							column: b.column
+						});
+					}
+					return acc;
+				}, {});
+				promises.push(
+					axios('/api2' + del_route.route, {
+						method: 'DELETE',
+						data: {
+							deleted: deleted_items_toObj,
+							category: category.category
 						}
+					})
+				);
+				return s;
+			});
+			await Promise.all(promises);
+		},
+		async handleDeleteMobile() {
+			const promises = [];
+			update((s) => {
+				const categories = get(collectionStore).categories;
+				const category = get(categoryStore).category;
+				const deleted_items_toObj = s.deleted.reduce((acc, b) => {
+					if (!acc[b.page_id]) {
+						const routes = categories[b.page_category].endpoints_mobile;
+						const delete_route = routes.find((item) => {
+							return item.method === 'DELETE' && item.type === 'media';
+						});
+						acc[b.page_id] = { items: [b.image_id], route: delete_route.route };
+					} else {
+						acc[b.page_id].items.push(b.image_id);
 					}
 					return acc;
 				}, {});
 
-				s.deleted = [];
-				return s;
-			});
+				for (const page_id in deleted_items_toObj) {
+					if (Object.hasOwnProperty.call(deleted_items_toObj, page_id)) {
+						const element = deleted_items_toObj[page_id];
 
-			const categories = get(tableStore);
-			const isMobile = categories.currentTable.category === 'mobile';
-
-			if (isMobile) {
-				const mobile_formatted = {};
-				for (const page in formatted) {
-					const element = formatted[page];
-					mobile_formatted[page] = element;
-					if (categories.categories[element[0].category].category === 'behind-the-scenes') {
-						await axios(`${hostName}/api/${category}/behind-the-scenes`, {
-							method: 'DELETE',
-							data: {
-								deleted: mobile_formatted,
-								category: category
-							}
-						});
-					} else {
-						await axios(`${hostName}/api/${category}`, {
-							method: 'DELETE',
-							data: {
-								deleted: mobile_formatted,
-								category: category
-							}
-						});
+						promises.push(
+							axios('/api2' + element.route, {
+								method: 'DELETE',
+								data: {
+									deleted: {
+										[page_id]: element.items
+									},
+									category: category.category
+								}
+							})
+						);
 					}
 				}
-
-				return;
-			}
-
-			await axios(`${hostName}/api/${category}`, {
-				method: 'DELETE',
-				data: {
-					deleted: formatted,
-					category: category
-				}
+				return s;
 			});
+			await Promise.all(promises);
 		},
 		addItem(selected) {
 			update((s) => {
 				const itemIndex = s.deleted.findIndex((item) => {
 					return selected.image_id === item.image_id;
 				});
-
 				if (s.deleted.length === 0 || itemIndex < 0) {
 					s.deleted = [...s.deleted, selected];
-					console.log(s.deleted);
 					return s;
 				}
-
 				s.deleted = s.deleted.filter((item) => {
 					return item.image_id !== selected.image_id;
 				});

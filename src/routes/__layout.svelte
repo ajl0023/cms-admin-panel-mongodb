@@ -1,54 +1,58 @@
 <script context="module">
-	import _ from 'lodash';
-	import { tableStore } from '$lib/tableStore';
-	export async function load({ params, fetch, session, stuff }) {
-		const res = await fetch(`${hostName}/api/categories`);
+	// export const ssr = false;
+	import { browser } from '$app/env';
+	import Navbar from '$lib/components/Navbar/Navbar.svelte';
+	import StartModal from '$lib/components/StartModal/StartModal.svelte';
+	import { collectionStore } from '$lib/stores/collectionStore-store';
+	import { onMount } from 'svelte';
+	import '../global.scss';
+	export const prerender = true;
 
-		const body = await res.json();
-		const toObj = body.reduce((acc, b) => {
-			acc[b._id] = b;
-			return acc;
-		}, {});
-		tableStore.update((s) => {
-			s.categories = toObj;
+	export async function load({ fetch, stuff, session }) {
+		if (browser) {
+			const collection = await fetch('/api/collection');
 
-			return s;
-		});
-		if (res.ok) {
-			return {
-				props: {
-					pages: body
+			try {
+				if (collection.status === 403) {
+					return {
+						props: {
+							collection: null
+						}
+					};
 				}
-			};
+				const categories = await (await fetch('/api/categories')).json();
+				const categories_toObj = categories.categories.reduce((acc, b) => {
+					acc[b._id] = b;
+					return acc;
+				}, {});
+				const body = await collection.json();
+
+				collectionStore.update((s) => {
+					s.collection = body.collection;
+
+					s.categories = categories_toObj;
+
+					return s;
+				});
+				return {};
+			} catch (error) {}
 		}
 
-		return {
-			status: res.status,
-			error: new Error(`Could not load ${url}`)
-		};
+		return {};
 	}
 </script>
 
 <script>
-	import Navbar from '$lib/Navbar.svelte';
-	import '../global.scss';
-	import TableModal from '$lib/TableModal/TableModal.svelte';
-	import { tableModalStore } from '$lib/TableModal/tableModalStore';
-	import { onMount } from 'svelte';
-	import { hostName } from '../host';
-
-	// const test = axios.get('/api/tables');
-
-	export let pages;
+	onMount(async () => {});
 </script>
 
 <div class="wrapper">
-	{#if $tableModalStore.visible}
-		<TableModal />
+	{#if !$collectionStore.collection}
+		<StartModal />
+	{:else}
+		<Navbar />
+		<slot />
 	{/if}
-	<Navbar pages="{pages}" />
-
-	<slot />
 </div>
 
 <style lang="scss">

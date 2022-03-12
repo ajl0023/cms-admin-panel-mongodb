@@ -8,21 +8,51 @@
 		<link rel="icon" href="./favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="content-security-policy" content="">
-	<link rel="modulepreload" href="/_app/start-9afe748a.js">
-	<link rel="modulepreload" href="/_app/chunks/vendor-606c8cd8.js"><script type="module">
-		import { start } from "/_app/start-9afe748a.js";
+	<link rel="stylesheet" href="/_app/assets/pages/__layout.svelte-45bcaffb.css">
+	<link rel="modulepreload" href="/_app/start-3a77ca90.js">
+	<link rel="modulepreload" href="/_app/chunks/vendor-0a020ef4.js">
+	<link rel="modulepreload" href="/_app/pages/__layout.svelte-a3fee04a.js">
+	<link rel="modulepreload" href="/_app/chunks/host-c1de9bea.js">
+	<link rel="modulepreload" href="/_app/pages/index.svelte-ef6da5aa.js"><script type="module">
+		import { start } from "/_app/start-3a77ca90.js";
 		start({
 			target: document.querySelector("#svelte"),
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
-			spa: true,
+			spa: false,
 			trailing_slash: "never",
-			hydrate: null
+			hydrate: {
+				status: 200,
+				error: null,
+				nodes: [
+					import("/_app/pages/__layout.svelte-a3fee04a.js"),
+						import("/_app/pages/index.svelte-ef6da5aa.js")
+				],
+				url: new URL("http://sveltekit-prerender/"),
+				params: {}
+			}
 		});
 	</script>
 	</head>
 	<body>
-		<div id="svelte"></div>
+		<div id="svelte">
+
+
+
+
+
+
+
+<div class="wrapper"><p>null</p>
+	<div class="wrapper svelte-wutjgc"><div class="modal-container svelte-wutjgc"><div class="inputs-container svelte-wutjgc"><input value="Maliview" type="radio" name="collection-input" id="Maliview" class="svelte-wutjgc">
+				<label for="Maliview"><span>Maliview</span></label>
+			</div><div class="inputs-container svelte-wutjgc"><input value="Aviator" type="radio" name="collection-input" id="Aviator" class="svelte-wutjgc">
+				<label for="Aviator"><span>Aviator</span></label>
+			</div>
+		<div class="button-container svelte-wutjgc"><button class="btn btn-primary">Enter</button></div></div>
+</div></div>
+
+</div>
 	</body>
 </html>
