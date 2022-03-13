@@ -11,7 +11,6 @@
 	export let options;
 	export let data;
 	let selected;
-	console.log(options);
 </script>
 
 <div class="wrapper">
@@ -53,13 +52,20 @@
 				{/if}
 			{:else if option.method !== 'DELETE'}
 				<button
-					on:click="{() => {
-						$entryModalStore.visible = true;
+					on:click="{async () => {
+						if (option.name !== 'Save') {
+							$entryModalStore.visible = true;
 
-						$entryModalStore.selected = data;
-						$entryModalStore.endpoint = option;
+							$entryModalStore.selected = data;
+							$entryModalStore.endpoint = option;
+						} else {
+							await axios('/api2' + option.route, {
+								method: option.method
+							});
+						}
 					}}"
 					class="btn btn-primary"
+					class:save-button="{option.name === 'Save'}"
 					>{option.name}
 				</button>
 			{/if}
@@ -68,6 +74,10 @@
 </div>
 
 <style lang="scss">
+	.save-button {
+		color: #0d6efd;
+		background-color: transparent;
+	}
 	.confirm-button {
 		cursor: pointer;
 	}

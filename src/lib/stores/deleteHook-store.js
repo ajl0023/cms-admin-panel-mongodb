@@ -1,9 +1,8 @@
-import { tableStore } from '$lib/stores/tableStore';
 import axios from 'axios';
 import { get, writable } from 'svelte/store';
-import { hostName } from '../../host';
 import { categoryStore } from './category-store';
 import { collectionStore } from './collectionStore-store';
+
 //from https://github.com/codrops/MarqueeMenu/blob/main/src/js/menuItem.js#L29
 
 const store = () => {
@@ -94,6 +93,7 @@ const store = () => {
 				}
 				return s;
 			});
+
 			await Promise.all(promises);
 		},
 		addItem(selected) {
@@ -108,7 +108,7 @@ const store = () => {
 				s.deleted = s.deleted.filter((item) => {
 					return item.image_id !== selected.image_id;
 				});
-				console.log(s.deleted);
+
 				return s;
 			});
 		}

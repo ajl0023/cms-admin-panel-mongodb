@@ -36,7 +36,7 @@ export default function (plop) {
 		actions: [
 			{
 				type: 'add',
-				path: 'src/lib/{{folderName}}/{{folderName}}.svelte',
+				path: 'src/lib/components/{{folderName}}/{{folderName}}.svelte',
 				templateFile: './svelte-file-templates/model.svelte.hbs',
 				force: true,
 				transform: (x) => {

@@ -55,7 +55,8 @@
 			data: data
 		});
 
-		fetch(request);
+		await fetch(request);
+		window.location.reload();
 	};
 </script>
 

@@ -3,15 +3,29 @@
 
 <script>
 	import { deleteHook } from '$lib/stores/deleteHook-store';
+	import { dragStore } from '$lib/stores/dragStore';
 
 	export let img;
 	export let page;
 	export let column;
+	export let index;
+	export let set_id;
 </script>
 
 {#if img.url}
 	<div
+		class:thumbs="{column === 'thumbs'}"
 		class="image-container"
+		on:dragstart="{(e) => {
+			console.log(set_id);
+			dragStore.dragStart(e, img, index, set_id);
+		}}"
+		on:dragover="{(e) => {
+			dragStore.dragover(index);
+		}}"
+		on:dragend="{(e) => {
+			dragStore.dragend(e);
+		}}"
 		on:click="{() => {
 			deleteHook.addItem({
 				image_id: img._id,
@@ -37,6 +51,10 @@
 		height: 100%;
 		pointer-events: none;
 		z-index: 4;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
 		position: absolute;
 	}
 	.selected {

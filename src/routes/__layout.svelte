@@ -43,7 +43,7 @@
 </script>
 
 <script>
-	onMount(async () => {});
+	
 </script>
 
 <div class="wrapper">

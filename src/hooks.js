@@ -46,7 +46,7 @@ export function getSession(event) {
 		: {};
 }
 export async function externalFetch(request) {
-	console.log(5555);
+
 	if (request.url.startsWith('http://localhost:3000')) {
 		// clone the original request, but change the URL
 

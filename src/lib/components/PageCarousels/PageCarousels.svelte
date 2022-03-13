@@ -3,9 +3,9 @@
 
 <script>
 	import { categoryStore } from '$lib/stores/category-store';
-
-	import CategoryImage from '../CategoryImage/CategoryImage.svelte';
+	import { v4 as uuidv4 } from 'uuid';
 	import EditBar from '../EditBar/EditBar.svelte';
+	import ImagesContainer from '../ImagesContainer/ImagesContainer.svelte';
 
 	export let items;
 </script>
@@ -24,9 +24,7 @@
 						</div>
 					</div>
 					<div class="images-container">
-						{#each page.images as img}
-							<CategoryImage img="{img}" page="{page}" col="images" />
-						{/each}
+						<ImagesContainer set_id="{uuidv4()}" images="{page.images}" page="{page}" />
 					</div>
 				</div>
 			{/each}

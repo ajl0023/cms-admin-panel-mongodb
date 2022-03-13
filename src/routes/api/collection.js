@@ -30,7 +30,9 @@ export async function post({ request }) {
 			status: 500
 		};
 	}
-	const new_cookie = cookie.serialize('collection', collection);
+	const new_cookie = cookie.serialize('collection', collection, {
+		path: '/'
+	});
 
 	return {
 		headers: {

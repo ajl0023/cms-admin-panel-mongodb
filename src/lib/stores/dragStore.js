@@ -4,6 +4,7 @@ import { get, writable } from 'svelte/store';
 
 const store = () => {
 	const state = {
+		current_set: null,
 		mouseYCoordinate: null,
 		distanceTopGrabbedVsPointer: null,
 		hoveredItemIndex: null,
@@ -11,14 +12,20 @@ const store = () => {
 		draggingItemId: null,
 		draggingItemIndex: null
 	};
+	const copy = {
+		...state
+	};
 	const { subscribe, set, update } = writable(state);
 
 	const methods = {
 		dragend(e) {
 			update((s) => {
-				s.draggingItemId = null; // makes item visible
-				s.hoveredItemIndex = null;
-				return s;
+				return { ...copy };
+			}); // prevents instant swap
+		},
+		reset(e) {
+			update((s) => {
+				return copy;
 			}); // prevents instant swap
 		},
 		dragover(i) {
@@ -27,8 +34,9 @@ const store = () => {
 				return s;
 			});
 		},
-		dragStart(e, item, i) {
+		dragStart(e, item, i, set_id) {
 			update((s) => {
+				s.current_set = set_id;
 				s.mouseYCoordinate = e.clientY;
 
 				s.draggingItem = item;
@@ -54,4 +62,4 @@ const store = () => {
 	};
 };
 
-export const tableStoreDrag = store();
+export const dragStore = store();

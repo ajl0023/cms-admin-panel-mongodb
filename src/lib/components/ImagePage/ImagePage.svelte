@@ -2,11 +2,7 @@
 </script>
 
 <script>
-	import { categoryStore } from '$lib/stores/category-store';
-
 	import { collectionStore } from '$lib/stores/collectionStore-store';
-
-	import { tableStore } from '$lib/stores/tableStore';
 	import _ from 'lodash';
 	import { onMount } from 'svelte';
 	import CategoryImage from '../CategoryImage/CategoryImage.svelte';

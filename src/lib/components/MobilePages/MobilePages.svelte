@@ -2,21 +2,14 @@
 </script>
 
 <script>
-	import { page } from '$app/stores';
-	import { categoryStore } from '$lib/stores/category-store';
 	import { collectionStore } from '$lib/stores/collectionStore-store';
-
-	import axios from 'axios';
 	import _ from 'lodash';
-	import { onMount } from 'svelte';
-	import CategoryImage from '../CategoryImage/CategoryImage.svelte';
+	import { v4 as uuidv4 } from 'uuid';
 	import EditBar from '../EditBar/EditBar.svelte';
+	import ImagesContainer from '../ImagesContainer/ImagesContainer.svelte';
 
 	export let items;
 
-	onMount(async () => {
-		console.log(items);
-	});
 	let selected_phase;
 </script>
 
@@ -42,9 +35,7 @@
 		{/if}
 		<div class="images-container">
 			{#if page.page !== 'behind-the-scenes'}
-				{#each page.images as img}
-					<CategoryImage col="images" img="{img}" page="{page}" />
-				{/each}
+				<ImagesContainer set_id="{uuidv4()}" col="images" images="{page.images}" page="{page}" />
 			{:else}
 				<div class="bts-mobile-container">
 					{#each page.phases as phase}
@@ -62,9 +53,7 @@
 								/>
 							</div>
 							<div class="images-container">
-								{#each phase.images as img}
-									<CategoryImage img="{img}" page="{page}" />
-								{/each}
+								<ImagesContainer images="{phase.images}" page="{phase}" set_id="{uuidv4()}" />
 							</div>
 						</div>
 					{/each}
@@ -88,17 +77,10 @@
 	.confirm.cancel {
 		color: black;
 	}
-	.flex-container {
-		display: flex;
-		.category-name {
-			font-weight: 600;
-		}
-		align-items: flex-end;
-
-		.edit-bar {
-			margin-right: 30px;
-		}
+	.category-name {
+		font-weight: 600;
 	}
+
 	.wrapper {
 		margin-top: 1rem;
 	}

@@ -5,8 +5,11 @@
 	import { collectionStore } from '$lib/stores/collectionStore-store';
 
 	import { onMount } from 'svelte';
+	import { v4 as uuidv4 } from 'uuid';
+
 	import CategoryImage from '../CategoryImage/CategoryImage.svelte';
 	import EditBar from '../EditBar/EditBar.svelte';
+	import ImagesContainer from '../ImagesContainer/ImagesContainer.svelte';
 	export let items;
 
 	const fields = ['left', 'right', 'thumbs'];
@@ -21,14 +24,15 @@
 		{#each fields as col}
 			<span>{col}</span>
 			<div class="images-container">
-				{#each page[col] as img, i}
+				<ImagesContainer images="{page[col]}" column="{col}" page="{page}" set_id="{uuidv4()}" />
+				<!-- {#each page[col] as img, i}
 					<div class="order-container">
 						<div class="inner-order-container">
 							<span class="order">{i}</span>
 						</div>
 						<CategoryImage column="{col}" img="{img}" page="{page}" />
 					</div>
-				{/each}
+				{/each} -->
 			</div>
 		{/each}
 	{/each}

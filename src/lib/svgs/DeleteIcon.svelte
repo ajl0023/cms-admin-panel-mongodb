@@ -1,17 +1,16 @@
 <script>
 	import { categoryStore } from '$lib/stores/category-store';
-
 	import { deleteHook } from '$lib/stores/deleteHook-store';
-	import { tableStore } from '$lib/stores/tableStore';
+	export let toggled;
 </script>
 
-<div class="icon">
+<div
+	class="icon"
+	on:click="{() => {
+		toggled = true;
+	}}"
+>
 	<svg
-		on:click="{() => {
-			$categoryStore.category.category === 'mobile'
-				? deleteHook.handleDeleteMobile()
-				: deleteHook.handleDelete();
-		}}"
 		xmlns="http://www.w3.org/2000/svg"
 		height="24px"
 		viewBox="0 0 24 24"

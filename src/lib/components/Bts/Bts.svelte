@@ -1,8 +1,10 @@
 <script>
 	import { categoryStore } from '$lib/stores/category-store';
+	import { v4 as uuidv4 } from 'uuid';
 
 	import CategoryImage from '../CategoryImage/CategoryImage.svelte';
 	import EditBar from '../EditBar/EditBar.svelte';
+	import ImagesContainer from '../ImagesContainer/ImagesContainer.svelte';
 
 	let selected_phase;
 	export let items;
@@ -21,9 +23,7 @@
 					</div>
 				</div>
 				<div class="images-container">
-					{#each phase.images as img}
-						<CategoryImage col="images" img="{img}" page="{phase}" />
-					{/each}
+					<ImagesContainer set_id="{uuidv4()}" images="{phase.images}" page="{phase}" />
 				</div>
 			</div>
 		{/each}
@@ -31,7 +31,6 @@
 </div>
 
 <style lang="scss">
-	
 	.edit-bar {
 		align-items: flex-end;
 		display: flex;

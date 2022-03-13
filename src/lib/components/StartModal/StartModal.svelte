@@ -45,8 +45,10 @@
 							collection: selected
 						})
 					});
+
 					const collection = await res.json();
-					$collectionStore.collection = collection.collection;
+					
+					window.location.reload();
 				}}">Enter</button
 			>
 		</div>
