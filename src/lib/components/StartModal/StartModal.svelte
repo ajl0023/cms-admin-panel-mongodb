@@ -6,6 +6,7 @@
 	import { onMount, tick } from 'svelte';
 	import axios from 'axios';
 	import { collectionStore } from '$lib/stores/collectionStore-store';
+	import { goto } from '$app/navigation';
 	export let pages;
 	let selected;
 	onMount(async () => {});
@@ -46,8 +47,9 @@
 						})
 					});
 
-					const collection = await res.json();
-					
+					await res.json();
+
+					await goto('/');
 					window.location.reload();
 				}}">Enter</button
 			>
