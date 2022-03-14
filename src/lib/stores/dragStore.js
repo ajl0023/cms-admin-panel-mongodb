@@ -2,7 +2,7 @@ import { get, writable } from 'svelte/store';
 
 //from https://github.com/codrops/MarqueeMenu/blob/main/src/js/menuItem.js#L29
 
-const store = () => {
+export const drag_store = () => {
 	const state = {
 		current_set: null,
 		mouseYCoordinate: null,
@@ -10,7 +10,8 @@ const store = () => {
 		hoveredItemIndex: null,
 		draggingItem: null,
 		draggingItemId: null,
-		draggingItemIndex: null
+		draggingItemIndex: null,
+		is_editing: false
 	};
 	const copy = {
 		...state
@@ -20,14 +21,11 @@ const store = () => {
 	const methods = {
 		dragend(e) {
 			update((s) => {
-				return { ...copy };
+			
+				return { ...copy, is_editing: s.is_editing };
 			}); // prevents instant swap
 		},
-		reset(e) {
-			update((s) => {
-				return copy;
-			}); // prevents instant swap
-		},
+
 		dragover(i) {
 			update((s) => {
 				s.hoveredItemIndex = i;
@@ -36,6 +34,7 @@ const store = () => {
 		},
 		dragStart(e, item, i, set_id) {
 			update((s) => {
+				s.is_editing = true;
 				s.current_set = set_id;
 				s.mouseYCoordinate = e.clientY;
 
@@ -61,5 +60,3 @@ const store = () => {
 		...methods
 	};
 };
-
-export const dragStore = store();

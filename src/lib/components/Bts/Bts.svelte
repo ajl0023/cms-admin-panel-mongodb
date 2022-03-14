@@ -14,17 +14,13 @@
 	{#if items.length > 0}
 		{#each items as phase}
 			<div class="phase-container">
-				<div class="top-bar">
-					<span>
-						Phase {phase.phase}
-					</span>
-					<div class="edit-bar">
-						<EditBar data="{phase}" options="{$categoryStore.category.endpoints}" />
-					</div>
-				</div>
-				<div class="images-container">
-					<ImagesContainer set_id="{uuidv4()}" images="{phase.images}" page="{phase}" />
-				</div>
+				<ImagesContainer
+					options="{$categoryStore.category.endpoints}"
+					set_name="Phase {phase.phase}"
+					set_id="{uuidv4()}"
+					images="{phase.images}"
+					page="{phase}"
+				/>
 			</div>
 		{/each}
 	{/if}
@@ -38,16 +34,10 @@
 	.wrapper {
 		overflow-y: auto;
 	}
-	.phase-container {
-		margin-top: 30px;
-	}
+
 	.top-bar {
 		display: flex;
 		align-items: flex-end;
-		margin-bottom: 10px;
-		.edit-bar {
-			margin-left: 30px;
-		}
 	}
 	.images-container {
 		display: flex;

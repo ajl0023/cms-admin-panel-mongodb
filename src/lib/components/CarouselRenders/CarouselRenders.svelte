@@ -18,21 +18,16 @@
 
 <div class="wrapper">
 	{#each items as page}
-		<div class="edit-bar">
-			<EditBar data="{page}" options="{$collectionStore.categories[page.category].endpoints}" />
-		</div>
 		{#each fields as col}
-			<span>{col}</span>
 			<div class="images-container">
-				<ImagesContainer images="{page[col]}" column="{col}" page="{page}" set_id="{uuidv4()}" />
-				<!-- {#each page[col] as img, i}
-					<div class="order-container">
-						<div class="inner-order-container">
-							<span class="order">{i}</span>
-						</div>
-						<CategoryImage column="{col}" img="{img}" page="{page}" />
-					</div>
-				{/each} -->
+				<ImagesContainer
+					set_name="{col}"
+					options="{$collectionStore.categories[page.category].endpoints}"
+					images="{page[col]}"
+					column="{col}"
+					page="{page}"
+					set_id="{uuidv4()}"
+				/>
 			</div>
 		{/each}
 	{/each}

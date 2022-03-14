@@ -3,6 +3,7 @@
 
 <script>
 	import { categoryStore } from '$lib/stores/category-store';
+	import { collectionStore } from '$lib/stores/collectionStore-store';
 
 	import { entryModalStore } from '$lib/stores/entryModalStore';
 	import axios from 'axios';
@@ -10,7 +11,23 @@
 
 	export let options;
 	export let data;
+	export let set_id;
+	export let dragStore;
+	export let column;
+	export let is_editing;
+	export let belongs_to;
+	export let images;
 	let selected;
+
+	let current_dragset = null;
+	let is_requesting = false;
+	// $: {
+	// 	if (set_id === $dragStore.current_set && !is_requesting) {
+	// 		if (!current_dragset && $dragStore.current_set) {
+	// 			current_dragset = $dragStore.current_set;
+	// 		}
+	// 	}
+	// }
 </script>
 
 <div class="wrapper">
@@ -29,16 +46,23 @@
 						Confirm Deletion
 						<span
 							on:click="{async () => {
-								await tick();
-								const del_route = $categoryStore.category.endpoints.find((item) => {
-									return item.method === 'DELETE';
+								const endpoints =
+									$categoryStore.category.category === 'mobile'
+										? $collectionStore.categories[data.category].endpoints_mobile
+										: $categoryStore.category.endpoints;
+
+								const del_route = endpoints.find((item) => {
+									return item.method === 'DELETE' && item.type !== 'media';
 								});
+								const request_body = {
+									_id: data._id
+								};
+								request_body['phase'] = data.phase;
 								await axios('/api2' + del_route.route, {
 									method: del_route.method,
-									data: {
-										_id: data._id
-									}
+									data: request_body
 								});
+								selected = null;
 							}}"
 							class="confirm-button confirm">Yes</span
 						>/
@@ -50,7 +74,7 @@
 						>
 					</span>
 				{/if}
-			{:else if option.method !== 'DELETE'}
+			{:else if (option.method !== 'DELETE') & (option.name !== 'Save')}
 				<button
 					on:click="{async () => {
 						if (option.name !== 'Save') {
@@ -58,15 +82,38 @@
 
 							$entryModalStore.selected = data;
 							$entryModalStore.endpoint = option;
-						} else {
-							await axios('/api2' + option.route, {
-								method: option.method
-							});
 						}
 					}}"
 					class="btn btn-primary"
-					class:save-button="{option.name === 'Save'}"
-					>{option.name}
+				>
+					{option.name}
+				</button>
+			{:else if belongs_to === 'document' && option.name === 'Save' && $dragStore.is_editing}
+				<button
+					class="btn btn-outline-primary"
+					on:click="{async () => {
+						const request_data = {
+							set_id: data._id,
+							column: column,
+							images: images.map((item, i) => {
+								return {
+									...item,
+									order: i
+								};
+							})
+						};
+
+						if (data.page === 'behind-the-scenes') {
+							request_data['phase'] = data.phase;
+						}
+						await axios('/api2' + option.route, {
+							method: option.method,
+							data: request_data
+						});
+						$dragStore.is_editing = false;
+					}}"
+				>
+					{option.name}
 				</button>
 			{/if}
 		{/each}

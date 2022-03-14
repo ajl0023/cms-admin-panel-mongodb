@@ -46,16 +46,14 @@
 		if ($entryModalStore.selected.page === 'behind-the-scenes') {
 			data.append('phase', $entryModalStore.selected.phase);
 		}
-		const value = Object.fromEntries(data.entries());
 
 		const endpoint_data = $entryModalStore.endpoint;
-
-		const request = axios('/api2' + endpoint_data.route, {
+		console.log(endpoint_data);
+		await axios('/api2' + '/api' + endpoint_data.route, {
 			method: endpoint_data.method,
 			data: data
 		});
 
-		await fetch(request);
 		window.location.reload();
 	};
 </script>
@@ -93,10 +91,36 @@
 				{:else}
 					<div class="form-field">
 						<label for="{field.name}" class="form-label">{field.client_label}</label>
-						<input name="{field.name}" class="form-control" placeholder="" />
+						<input
+							bind:value="{inputs[field.name]}"
+							name="{field.name}"
+							class="form-control"
+							placeholder=""
+						/>
 					</div>
 				{/if}
+				{#if field.name === 'video_url' && $entryModalStore.selected.video_url}
+					<iframe
+						width="1264"
+						height="480"
+						src="{(function () {
+							var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+							var match = $entryModalStore.selected.video_url.match(regExp);
+							if (match && match[2].length == 11) {
+								return 'https://www.youtube.com/embed/' + match[2];
+							} else {
+								return 'error';
+							}
+						})()}"
+						title="YouTube video player"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen
+					>
+					</iframe>
+				{/if}
 			{/each}
+
 			<div class="col-auto">
 				<button on:click="{handleSubmit}" type="button" class="btn btn-primary mb-3">Submit</button>
 			</div>

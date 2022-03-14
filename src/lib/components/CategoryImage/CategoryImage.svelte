@@ -3,13 +3,13 @@
 
 <script>
 	import { deleteHook } from '$lib/stores/deleteHook-store';
-	import { dragStore } from '$lib/stores/dragStore';
 
 	export let img;
 	export let page;
 	export let column;
 	export let index;
 	export let set_id;
+	export let dragStore;
 </script>
 
 {#if img.url}
@@ -17,7 +17,6 @@
 		class:thumbs="{column === 'thumbs'}"
 		class="image-container"
 		on:dragstart="{(e) => {
-			console.log(set_id);
 			dragStore.dragStart(e, img, index, set_id);
 		}}"
 		on:dragover="{(e) => {

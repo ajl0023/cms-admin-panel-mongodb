@@ -13,8 +13,9 @@ export const handle = async ({ event, resolve }) => {
 		);
 
 		// const request_body = await event.request.json();
-
-		return await fetch(new_request);
+		const response = await fetch(new_request);
+		console.log(response);
+		return response;
 	}
 	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
 
@@ -31,30 +32,5 @@ export const handle = async ({ event, resolve }) => {
 
 	return response;
 };
-export function getSession(event) {
-	return event.locals.user
-		? {
-				user: {
-					// only include properties needed client-side —
-					// exclude anything else attached to the user
-					// like access tokens etc
-					name: event.locals.user.name,
-					email: event.locals.user.email,
-					avatar: event.locals.user.avatar
-				}
-		  }
-		: {};
-}
-export async function externalFetch(request) {
-
-	if (request.url.startsWith('http://localhost:3000')) {
-		// clone the original request, but change the URL
-
-		request = new Request(
-			request.url.replace('https://api.yourapp.com/', 'http://localhost:9999/'),
-			request
-		);
-	}
-
-	return fetch(request);
-}
+export function getSession(event) {}
+export async function externalFetch(request) {}
