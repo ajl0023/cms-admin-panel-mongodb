@@ -50,7 +50,6 @@
 					await res.json();
 
 					await goto('/');
-					window.location.reload();
 				}}">Enter</button
 			>
 		</div>
