@@ -3,7 +3,7 @@
 	import { entryModalStore } from '$lib/stores/entryModalStore';
 	import { onMount, tick } from 'svelte';
 	import { get } from 'svelte/store';
-	categoryStore;
+
 	export async function load({ params, fetch, session, stuff }) {
 		const page_id = params.page;
 		const categories = get(collectionStore).categories;

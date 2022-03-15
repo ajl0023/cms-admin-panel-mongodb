@@ -7,6 +7,8 @@
 		return $collectionStore.categories[cat];
 	});
 	const collections = ['maliview', 'aviator'];
+	let should_update = true;
+	let update_timeout;
 </script>
 
 <div class="nav-container border-1 border-end">
@@ -14,12 +16,22 @@
 		<h5 class="nav-title">Pages</h5>
 		<div class="update-site-container">
 			<button
-				on:click="{() => {
-					fetch('/api/netlify', {
-						method: 'POST'
-					});
+				on:click="{async () => {
+					clearTimeout(update_timeout);
+
+					if (should_update) {
+						should_update = false;
+						await fetch('/api/netlify', {
+							method: 'POST'
+						});
+
+						update_timeout = setTimeout(() => {
+							should_update = true;
+						}, 20000);
+					}
 				}}"
-				class="btn btn-primary">Update Site</button
+				class="btn btn-primary"
+				class:inactive="{should_update === false}">Update Site</button
 			>
 		</div>
 	</div>
@@ -64,6 +76,10 @@
 </div>
 
 <style lang="scss">
+	.inactive {
+		background-color: gray;
+		pointer-events: none;
+	}
 	.collection-button {
 		cursor: pointer;
 	}
