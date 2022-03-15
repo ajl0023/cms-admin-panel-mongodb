@@ -6,7 +6,7 @@
 	import { collectionStore } from '$lib/stores/collectionStore-store';
 	import { onMount } from 'svelte';
 	import '../global.scss';
-	export const prerender = true;
+	export const prerender = false;
 
 	export async function load({ fetch, stuff, session }) {
 		if (browser) {
@@ -43,7 +43,6 @@
 </script>
 
 <script>
-	
 </script>
 
 <div class="wrapper">

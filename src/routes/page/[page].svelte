@@ -80,6 +80,7 @@
 	{#if $deleteHook.deleted.length > 0}
 		<SelectedBar />
 	{/if}
+
 	<p class="custom-tooltip">*{$categoryStore.category.description}</p>
 	<p class="custom-tooltip delete">*Click on items to select for deletion.</p>
 	{#if $categoryStore.category.insertable}

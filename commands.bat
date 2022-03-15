@@ -1,2 +1,2 @@
-git add . && git commit -m "minor convenience changes" && git push origin main
+git add . && git commit -m "sites are updateable feature" && git push origin main
 

@@ -10,7 +10,19 @@
 </script>
 
 <div class="nav-container border-1 border-end">
-	<h5 class="nav-title">Pages</h5>
+	<div class="nav-top-container">
+		<h5 class="nav-title">Pages</h5>
+		<div class="update-site-container">
+			<button
+				on:click="{() => {
+					fetch('/api/netlify', {
+						method: 'POST'
+					});
+				}}"
+				class="btn btn-primary">Update Site</button
+			>
+		</div>
+	</div>
 	<hr />
 	<nav class="nav flex-column">
 		{#each categories as category}
@@ -55,7 +67,7 @@
 	.collection-button {
 		cursor: pointer;
 	}
-	.nav-title {
+	.nav-top-container {
 		padding: 10px;
 	}
 	.nav-container {

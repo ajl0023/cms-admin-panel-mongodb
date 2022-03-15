@@ -49,7 +49,7 @@
 
 		const endpoint_data = $entryModalStore.endpoint;
 		console.log(endpoint_data);
-		await axios('/api2' + '/api' + endpoint_data.route, {
+		await axios('/api2' + endpoint_data.route, {
 			method: endpoint_data.method,
 			data: data
 		});
