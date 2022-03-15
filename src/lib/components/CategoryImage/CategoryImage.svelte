@@ -2,7 +2,10 @@
 </script>
 
 <script>
+	import { dev } from '$app/env';
+
 	import { deleteHook } from '$lib/stores/deleteHook-store';
+	import { hostName } from 'src/host';
 
 	export let img;
 	export let page;
@@ -10,6 +13,13 @@
 	export let index;
 	export let set_id;
 	export let dragStore;
+	$: {
+		if (img) {
+			if (dev) {
+				img.url = img.url.replace('https://test12312312356415616.store', hostName) + '?size=true';
+			}
+		}
+	}
 </script>
 
 {#if img.url}
