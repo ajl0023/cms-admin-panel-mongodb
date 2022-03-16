@@ -1,12 +1,16 @@
-import './shims.js';
-import { Server } from './server/index.js';
-import 'node:http';
-import 'node:https';
-import 'node:zlib';
-import 'node:stream';
-import 'node:util';
-import 'node:url';
-import 'net';
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+require('./shims.js');
+var _0SERVER = require('./server/index.js');
+require('node:http');
+require('node:https');
+require('node:zlib');
+require('node:stream');
+require('node:util');
+require('node:url');
+require('net');
 
 /**
  * Splits headers into two categories: single value and multi value
@@ -43,7 +47,7 @@ function split_headers(headers) {
  * @returns {import('@netlify/functions').Handler}
  */
 function init(manifest) {
-	const server = new Server(manifest);
+	const server = new _0SERVER.Server(manifest);
 
 	return async (event, context) => {
 		const rendered = await server.respond(to_request(event), { platform: { context } });
@@ -93,4 +97,4 @@ function to_request(event) {
 	return new Request(rawUrl, init);
 }
 
-export { init };
+exports.init = init;

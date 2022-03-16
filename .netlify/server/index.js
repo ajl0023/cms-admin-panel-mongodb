@@ -1,3 +1,54 @@
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key2, value) => key2 in obj ? __defProp(obj, key2, { enumerable: true, configurable: true, writable: true, value }) : obj[key2] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __reExport = (target, module2, copyDefault, desc) => {
+  if (module2 && typeof module2 === "object" || typeof module2 === "function") {
+    for (let key2 of __getOwnPropNames(module2))
+      if (!__hasOwnProp.call(target, key2) && (copyDefault || key2 !== "default"))
+        __defProp(target, key2, { get: () => module2[key2], enumerable: !(desc = __getOwnPropDesc(module2, key2)) || desc.enumerable });
+  }
+  return target;
+};
+var __toESM = (module2, isNodeMode) => {
+  return __reExport(__markAsModule(__defProp(module2 != null ? __create(__getProtoOf(module2)) : {}, "default", !isNodeMode && module2 && module2.__esModule ? { get: () => module2.default, enumerable: true } : { value: module2, enumerable: true })), module2);
+};
+var __toCommonJS = /* @__PURE__ */ ((cache) => {
+  return (module2, temp) => {
+    return cache && cache.get(module2) || (temp = __reExport(__markAsModule({}), module2, 1), cache && cache.set(module2, temp), temp);
+  };
+})(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
+var stdin_exports = {};
+__export(stdin_exports, {
+  Server: () => Server,
+  override: () => override
+});
+var import_index_8edc2136 = require("./chunks/index-8edc2136.js");
+var import_host_ef40cb6e = require("./chunks/host-ef40cb6e.js");
 var __accessCheck = (obj, member, msg) => {
   if (!member.has(obj))
     throw TypeError("Cannot " + msg);
@@ -17,14 +68,9 @@ var __privateSet = (obj, member, value, setter) => {
   return value;
 };
 var _use_hashes, _dev, _script_needs_csp, _style_needs_csp, _directives, _script_src, _style_src;
-import { c as create_ssr_component, s as setContext, v as validate_component, m as missing_component } from "./chunks/index-92880a40.js";
-import cookie from "cookie";
-import { v4 } from "@lukeed/uuid";
-import "axios";
-import { h as hostName } from "./chunks/host-b5b4a144.js";
 function afterUpdate() {
 }
-const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+const Root = (0, import_index_8edc2136.c)(($$result, $$props, $$bindings, slots) => {
   let { stores } = $$props;
   let { page } = $$props;
   let { components } = $$props;
@@ -32,7 +78,7 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { props_1 = null } = $$props;
   let { props_2 = null } = $$props;
   let { props_3 = null } = $$props;
-  setContext("__svelte__", stores);
+  (0, import_index_8edc2136.s)("__svelte__", stores);
   afterUpdate(stores.page.notify);
   if ($$props.stores === void 0 && $$bindings.stores && stores !== void 0)
     $$bindings.stores(stores);
@@ -54,19 +100,19 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   return `
 
 
-${components[1] ? `${validate_component(components[0] || missing_component, "svelte:component").$$render($$result, Object.assign(props_0 || {}), {}, {
+${components[1] ? `${(0, import_index_8edc2136.v)(components[0] || import_index_8edc2136.m, "svelte:component").$$render($$result, Object.assign(props_0 || {}), {}, {
     default: () => {
-      return `${components[2] ? `${validate_component(components[1] || missing_component, "svelte:component").$$render($$result, Object.assign(props_1 || {}), {}, {
+      return `${components[2] ? `${(0, import_index_8edc2136.v)(components[1] || import_index_8edc2136.m, "svelte:component").$$render($$result, Object.assign(props_1 || {}), {}, {
         default: () => {
-          return `${components[3] ? `${validate_component(components[2] || missing_component, "svelte:component").$$render($$result, Object.assign(props_2 || {}), {}, {
+          return `${components[3] ? `${(0, import_index_8edc2136.v)(components[2] || import_index_8edc2136.m, "svelte:component").$$render($$result, Object.assign(props_2 || {}), {}, {
             default: () => {
-              return `${validate_component(components[3] || missing_component, "svelte:component").$$render($$result, Object.assign(props_3 || {}), {}, {})}`;
+              return `${(0, import_index_8edc2136.v)(components[3] || import_index_8edc2136.m, "svelte:component").$$render($$result, Object.assign(props_3 || {}), {}, {})}`;
             }
-          })}` : `${validate_component(components[2] || missing_component, "svelte:component").$$render($$result, Object.assign(props_2 || {}), {}, {})}`}`;
+          })}` : `${(0, import_index_8edc2136.v)(components[2] || import_index_8edc2136.m, "svelte:component").$$render($$result, Object.assign(props_2 || {}), {}, {})}`}`;
         }
-      })}` : `${validate_component(components[1] || missing_component, "svelte:component").$$render($$result, Object.assign(props_1 || {}), {}, {})}`}`;
+      })}` : `${(0, import_index_8edc2136.v)(components[1] || import_index_8edc2136.m, "svelte:component").$$render($$result, Object.assign(props_1 || {}), {}, {})}`}`;
     }
-  })}` : `${validate_component(components[0] || missing_component, "svelte:component").$$render($$result, Object.assign(props_0 || {}), {}, {})}`}
+  })}` : `${(0, import_index_8edc2136.v)(components[0] || import_index_8edc2136.m, "svelte:component").$$render($$result, Object.assign(props_0 || {}), {}, {})}`}
 
 ${``}`;
 });
@@ -492,10 +538,11 @@ const escape_html_attr_dict = {
 const escape_html_attr_regex = new RegExp(`[${Object.keys(escape_html_attr_dict).join("")}]|[\\ud800-\\udbff](?![\\udc00-\\udfff])|[\\ud800-\\udbff][\\udc00-\\udfff]|[\\udc00-\\udfff]`, "g");
 function escape_html_attr(str) {
   const escaped_str = str.replace(escape_html_attr_regex, (match) => {
+    var _a;
     if (match.length === 2) {
       return match;
     }
-    return escape_html_attr_dict[match] ?? `&#${match.charCodeAt(0)};`;
+    return (_a = escape_html_attr_dict[match]) != null ? _a : `&#${match.charCodeAt(0)};`;
   });
   return `"${escaped_str}"`;
 }
@@ -645,7 +692,7 @@ if (typeof crypto !== "undefined") {
   generate_hash = sha256;
 } else {
   const name = "crypto";
-  csp_ready = import(name).then((crypto2) => {
+  csp_ready = Promise.resolve().then(() => __toESM(require(name))).then((crypto2) => {
     generate_nonce = () => {
       return crypto2.randomBytes(16).toString("base64");
     };
@@ -674,7 +721,7 @@ class Csp {
     __privateAdd(this, _script_src, void 0);
     __privateAdd(this, _style_src, void 0);
     __privateSet(this, _use_hashes, mode === "hash" || mode === "auto" && prerender);
-    __privateSet(this, _directives, dev ? { ...directives } : directives);
+    __privateSet(this, _directives, dev ? __spreadValues({}, directives) : directives);
     __privateSet(this, _dev, dev);
     const d = __privateGet(this, _directives);
     if (dev) {
@@ -715,7 +762,7 @@ class Csp {
   }
   get_header(is_meta = false) {
     const header = [];
-    const directives = { ...__privateGet(this, _directives) };
+    const directives = __spreadValues({}, __privateGet(this, _directives));
     if (__privateGet(this, _style_src).length > 0) {
       directives["style-src"] = [
         ...directives["style-src"] || directives["default-src"] || [],
@@ -754,17 +801,16 @@ class Csp {
     return `<meta http-equiv="content-security-policy" content=${content}>`;
   }
 }
-_use_hashes = new WeakMap();
-_dev = new WeakMap();
-_script_needs_csp = new WeakMap();
-_style_needs_csp = new WeakMap();
-_directives = new WeakMap();
-_script_src = new WeakMap();
-_style_src = new WeakMap();
-const updated = {
-  ...readable(false),
+_use_hashes = /* @__PURE__ */ new WeakMap();
+_dev = /* @__PURE__ */ new WeakMap();
+_script_needs_csp = /* @__PURE__ */ new WeakMap();
+_style_needs_csp = /* @__PURE__ */ new WeakMap();
+_directives = /* @__PURE__ */ new WeakMap();
+_script_src = /* @__PURE__ */ new WeakMap();
+_style_src = /* @__PURE__ */ new WeakMap();
+const updated = __spreadProps(__spreadValues({}, readable(false)), {
   check: () => false
-};
+});
 async function render_response({
   branch,
   options,
@@ -1005,7 +1051,7 @@ function serialize_error(error2) {
   let serialized = try_serialize(error2);
   if (!serialized) {
     const { name, message, stack } = error2;
-    serialized = try_serialize({ ...error2, name, message, stack });
+    serialized = try_serialize(__spreadProps(__spreadValues({}, error2), { name, message, stack }));
   }
   if (!serialized) {
     serialized = "{}";
@@ -1107,7 +1153,7 @@ async function load_node({
   status,
   error: error2
 }) {
-  const { module } = node;
+  const { module: module2 } = node;
   let uses_credentials = false;
   const fetched = [];
   let set_cookie_headers = [];
@@ -1128,7 +1174,7 @@ async function load_node({
       status: shadow.status,
       redirect: shadow.redirect
     };
-  } else if (module.load) {
+  } else if (module2.load) {
     const load_input = {
       url: state.prerender ? create_prerendering_url_proxy(url) : url,
       params,
@@ -1143,7 +1189,7 @@ async function load_node({
           requested = resource;
         } else {
           requested = resource.url;
-          opts = {
+          opts = __spreadValues({
             method: resource.method,
             headers: resource.headers,
             body: resource.body,
@@ -1152,9 +1198,8 @@ async function load_node({
             cache: resource.cache,
             redirect: resource.redirect,
             referrer: resource.referrer,
-            integrity: resource.integrity,
-            ...opts
-          };
+            integrity: resource.integrity
+          }, opts);
         }
         opts.headers = new Headers(opts.headers);
         for (const [key2, value] of event.request.headers) {
@@ -1183,10 +1228,10 @@ async function load_node({
         } else if (is_root_relative(resolved)) {
           if (opts.credentials !== "omit") {
             uses_credentials = true;
-            const cookie2 = event.request.headers.get("cookie");
+            const cookie = event.request.headers.get("cookie");
             const authorization = event.request.headers.get("authorization");
-            if (cookie2) {
-              opts.headers.set("cookie", cookie2);
+            if (cookie) {
+              opts.headers.set("cookie", cookie);
             }
             if (authorization && !opts.headers.has("authorization")) {
               opts.headers.set("authorization", authorization);
@@ -1209,9 +1254,9 @@ async function load_node({
           }
           if (`.${new URL(requested).hostname}`.endsWith(`.${event.url.hostname}`) && opts.credentials !== "omit") {
             uses_credentials = true;
-            const cookie2 = event.request.headers.get("cookie");
-            if (cookie2)
-              opts.headers.set("cookie", cookie2);
+            const cookie = event.request.headers.get("cookie");
+            if (cookie)
+              opts.headers.set("cookie", cookie);
           }
           const external_request = new Request(requested, opts);
           response = await options.hooks.externalFetch.call(null, external_request);
@@ -1271,7 +1316,7 @@ async function load_node({
         });
         return proxy;
       },
-      stuff: { ...stuff }
+      stuff: __spreadValues({}, stuff)
     };
     if (options.dev) {
       Object.defineProperty(load_input, "page", {
@@ -1284,7 +1329,7 @@ async function load_node({
       load_input.status = status;
       load_input.error = error2;
     }
-    loaded = await module.load.call(null, load_input);
+    loaded = await module2.load.call(null, load_input);
     if (!loaded) {
       throw new Error(`load function must return a value${options.dev ? ` (${node.entry})` : ""}`);
     }
@@ -1367,7 +1412,7 @@ async function load_shadow_data(route, event, options, prerender) {
         data.redirect = headers instanceof Headers ? headers.get("location") : headers.location;
         return data;
       }
-      data.body = { ...body, ...data.body };
+      data.body = __spreadValues(__spreadValues({}, body), data.body);
     }
     return data;
   } catch (e) {
@@ -1470,11 +1515,11 @@ async function respond_with_error({
   }
 }
 async function respond$1(opts) {
+  var _a;
   const { event, options, state, $session, route, resolve_opts } = opts;
   let nodes;
   if (!resolve_opts.ssr) {
-    return await render_response({
-      ...opts,
+    return await render_response(__spreadProps(__spreadValues({}, opts), {
       branch: [],
       page_config: {
         hydrate: true,
@@ -1483,7 +1528,7 @@ async function respond$1(opts) {
       status: 200,
       url: event.url,
       stuff: {}
-    });
+    }));
   }
   try {
     nodes = await Promise.all(route.a.map((n) => options.manifest._.nodes[n] && options.manifest._.nodes[n]()));
@@ -1503,7 +1548,7 @@ async function respond$1(opts) {
   const leaf = nodes[nodes.length - 1].module;
   let page_config = get_page_config(leaf, options);
   if (state.prerender) {
-    const should_prerender = leaf.prerender ?? state.prerender.default;
+    const should_prerender = (_a = leaf.prerender) != null ? _a : state.prerender.default;
     if (!should_prerender) {
       return new Response(void 0, {
         status: 204
@@ -1522,14 +1567,13 @@ async function respond$1(opts) {
         let loaded;
         if (node) {
           try {
-            loaded = await load_node({
-              ...opts,
+            loaded = await load_node(__spreadProps(__spreadValues({}, opts), {
               url: event.url,
               node,
               stuff,
               is_error: false,
               is_leaf: i === nodes.length - 1
-            });
+            }));
             if (!loaded)
               return;
             set_cookie_headers = set_cookie_headers.concat(loaded.set_cookie_headers);
@@ -1563,8 +1607,7 @@ async function respond$1(opts) {
                   j -= 1;
                 }
                 try {
-                  const error_loaded = await load_node({
-                    ...opts,
+                  const error_loaded = await load_node(__spreadProps(__spreadValues({}, opts), {
                     url: event.url,
                     node: error_node,
                     stuff: node_loaded.stuff,
@@ -1572,13 +1615,13 @@ async function respond$1(opts) {
                     is_leaf: false,
                     status,
                     error: error2
-                  });
+                  }));
                   if (error_loaded.loaded.error) {
                     continue;
                   }
                   page_config = get_page_config(error_node.module, options);
                   branch = branch.slice(0, j + 1).concat(error_loaded);
-                  stuff = { ...node_loaded.stuff, ...error_loaded.stuff };
+                  stuff = __spreadValues(__spreadValues({}, node_loaded.stuff), error_loaded.stuff);
                   break ssr;
                 } catch (err) {
                   const e = coalesce_to_error(err);
@@ -1599,31 +1642,26 @@ async function respond$1(opts) {
           }
         }
         if (loaded && loaded.loaded.stuff) {
-          stuff = {
-            ...stuff,
-            ...loaded.loaded.stuff
-          };
+          stuff = __spreadValues(__spreadValues({}, stuff), loaded.loaded.stuff);
         }
       }
     }
   try {
-    return with_cookies(await render_response({
-      ...opts,
+    return with_cookies(await render_response(__spreadProps(__spreadValues({}, opts), {
       stuff,
       url: event.url,
       page_config,
       status,
       error: error2,
       branch: branch.filter(Boolean)
-    }), set_cookie_headers);
+    })), set_cookie_headers);
   } catch (err) {
     const error3 = coalesce_to_error(err);
     options.handle_error(error3, event);
-    return with_cookies(await respond_with_error({
-      ...opts,
+    return with_cookies(await respond_with_error(__spreadProps(__spreadValues({}, opts), {
       status: 500,
       error: error3
-    }), set_cookie_headers);
+    })), set_cookie_headers);
   }
 }
 function get_page_config(leaf, options) {
@@ -1712,6 +1750,7 @@ function negotiate(accept, types) {
 const DATA_SUFFIX = "/__data.json";
 const default_transform = ({ html }) => html;
 async function respond(request, options, state = {}) {
+  var _a;
   const url = new URL(request.url);
   const normalized = normalize_path(url.pathname, options.trailing_slash);
   if (normalized !== url.pathname) {
@@ -1723,7 +1762,7 @@ async function respond(request, options, state = {}) {
     });
   }
   const { parameter, allowed } = options.method_override;
-  const method_override = url.searchParams.get(parameter)?.toUpperCase();
+  const method_override = (_a = url.searchParams.get(parameter)) == null ? void 0 : _a.toUpperCase();
   if (method_override) {
     if (request.method === "POST") {
       if (allowed.includes(method_override)) {
@@ -1797,10 +1836,9 @@ async function respond(request, options, state = {}) {
             stuff: {},
             status: 200,
             branch: [],
-            resolve_opts: {
-              ...resolve_opts,
+            resolve_opts: __spreadProps(__spreadValues({}, resolve_opts), {
               ssr: false
-            }
+            })
           });
         }
         let decoded = decodeURI(event2.url.pathname);
@@ -1859,7 +1897,7 @@ async function respond(request, options, state = {}) {
           if (response2) {
             if (response2.status === 200 && response2.headers.has("etag")) {
               let if_none_match_value = request.headers.get("if-none-match");
-              if (if_none_match_value?.startsWith('W/"')) {
+              if (if_none_match_value == null ? void 0 : if_none_match_value.startsWith('W/"')) {
                 if_none_match_value = if_none_match_value.substring(2);
               }
               const etag = response2.headers.get("etag");
@@ -1938,37 +1976,47 @@ function set_paths(paths) {
 function set_prerendering(value) {
 }
 const handle = async ({ event, resolve: resolve2 }) => {
-  if (event.request.url.startsWith("http://localhost:3002/api2")) {
-    const new_request = new Request(event.request.url.replace("http://localhost:3002/api2", hostName), event.request);
-    return await fetch(new_request);
+  if (event.url.pathname === "/api/auth") {
+    const response = await resolve2(event, {
+      ssr: false
+    });
+    return response;
   }
-  const cookies = cookie.parse(event.request.headers.get("cookie") || "");
-  event.locals.userid = cookies.userid || v4();
-  event.locals.test = cookies.collection;
-  const response = await resolve2(event, {
-    ssr: false
-  });
-  return response;
+  const new_request = new Request(import_host_ef40cb6e.h + "/api/logged-in");
+  new_request.headers.append("cookie", event.request.headers.get("cookie"));
+  const check_status = await fetch(new_request);
+  if (check_status.status === 200) {
+    event.locals.user = {
+      status: "logged_in"
+    };
+  } else {
+    event.locals.user = {
+      status: "logged_out"
+    };
+  }
+  if (event.request.url.startsWith(`${import_host_ef40cb6e.h}/api2`)) {
+    const new_request2 = new Request(event.request.url.replace(`${import_host_ef40cb6e.h}/api2`, import_host_ef40cb6e.h), event.request);
+    const response = await fetch(new_request2);
+    return response;
+  } else {
+    const response = await resolve2(event, {
+      ssr: false
+    });
+    return response;
+  }
 };
+async function handleError({ error: error2, event }) {
+}
 function getSession(event) {
-  return event.locals.user ? {
-    user: {
-      name: event.locals.user.name,
-      email: event.locals.user.email,
-      avatar: event.locals.user.avatar
-    }
-  } : {};
+  return event.locals ? event.locals : {};
 }
 async function externalFetch(request) {
-  console.log(5555);
-  if (request.url.startsWith("http://localhost:3000")) {
-    request = new Request(request.url.replace("https://api.yourapp.com/", "http://localhost:9999/"), request);
-  }
   return fetch(request);
 }
 var user_hooks = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   handle,
+  handleError,
   getSession,
   externalFetch
 }, Symbol.toStringTag, { value: "Module" }));
@@ -2030,4 +2078,4 @@ class Server {
     return respond(request, this.options, options);
   }
 }
-export { Server, override };
+module.exports = __toCommonJS(stdin_exports);

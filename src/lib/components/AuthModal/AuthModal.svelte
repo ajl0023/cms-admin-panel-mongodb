@@ -12,22 +12,23 @@
 	let form;
 	const handleSubmit = async () => {
 		const form_data = new FormData(form);
-		// const foreign_server = await axios(hostName + '/auth/login', {
-		// 	method: 'POST',
-		// 	data: form_data
-		// });
-
-		// if (foreign_server.status === 200) {
-		const res = await axios('/api/auth', {
-			data: form_data,
-			method: 'POST'
+		const foreign_server = await axios(hostName + '/auth/login', {
+			method: 'POST',
+			data: form_data
 		});
-		if (res.status === 200) {
-			$session.user = {
-				status: 'logged_in'
-			};
+
+		if (foreign_server.status === 200) {
+			const res = await axios('/api/auth', {
+				data: foreign_server.data,
+				method: 'POST'
+			});
+
+			if (res.status === 200) {
+				$session.user = {
+					status: 'logged_in'
+				};
+			}
 		}
-		// }
 	};
 </script>
 

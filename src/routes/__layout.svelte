@@ -11,7 +11,7 @@
 	export const prerender = false;
 
 	export async function load({ fetch, stuff, session }) {
-		if (browser && session.status === 'logged_in') {
+		if (browser && session.user.status === 'logged_in') {
 			const collection = await fetch('/api/collection');
 
 			try {

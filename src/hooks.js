@@ -1,12 +1,6 @@
-import cookie from 'cookie';
-import { v4 as uuid } from '@lukeed/uuid';
-import axios from 'axios';
 import { hostName } from './host';
 
 export const handle = async ({ event, resolve }) => {
-	//request.clone
-	//request.clone
-
 	if (event.url.pathname === '/api/auth') {
 		const response = await resolve(event, {
 			ssr: false

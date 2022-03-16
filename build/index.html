@@ -8,18 +8,19 @@
 		<link rel="icon" href="./favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="content-security-policy" content="">
-	<link rel="modulepreload" href="/_app/start-ffac5f8f.js">
-	<link rel="modulepreload" href="/_app/chunks/vendor-bf419eb7.js">
+	<link rel="modulepreload" href="/_app/start-4030eef3.js">
+	<link rel="modulepreload" href="/_app/chunks/vendor-f58ccb3c.js">
 	<link rel="modulepreload" href="/_app/chunks/preload-helper-e4860ae8.js">
+	<link rel="modulepreload" href="/_app/chunks/singletons-d1fb5791.js">
 	</head>
 	<body>
 		<div id="svelte">
 		<script type="module" data-hydrate="45h">
-		import { start } from "/_app/start-ffac5f8f.js";
+		import { start } from "/_app/start-4030eef3.js";
 		start({
 			target: document.querySelector('[data-hydrate="45h"]').parentNode,
 			paths: {"base":"","assets":""},
-			session: {},
+			session: {user:{status:"logged_out"}},
 			route: true,
 			spa: true,
 			trailing_slash: "never",
