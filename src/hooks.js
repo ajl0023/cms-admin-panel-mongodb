@@ -50,7 +50,7 @@ export const handle = async ({ event, resolve }) => {
 };
 export async function handleError({ error, event }) {}
 export function getSession(event) {
-	return event.locals.user ? event.locals.user : {};
+	return event.locals ? event.locals : {};
 }
 export async function externalFetch(request) {
 	return fetch(request);

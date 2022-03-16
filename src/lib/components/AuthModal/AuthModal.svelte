@@ -6,6 +6,7 @@
 	import { onMount, tick } from 'svelte';
 	import axios from 'axios';
 	import { hostName } from 'src/host';
+	import { session } from '$app/stores';
 
 	let isLoggingIn = true;
 	let form;
@@ -17,10 +18,15 @@
 		// });
 
 		// if (foreign_server.status === 200) {
-		await axios('/api/auth', {
+		const res = await axios('/api/auth', {
 			data: form_data,
 			method: 'POST'
 		});
+		if (res.status === 200) {
+			$session.user = {
+				status: 'logged_in'
+			};
+		}
 		// }
 	};
 </script>
@@ -50,20 +56,7 @@
 				</div>
 				<div class="sub-cont">
 					<div class="img">
-						<div class="img__text m--up">
-							<h2>New here?</h2>
-							<p>Sign up and discover great amount of new opportunities!</p>
-						</div>
 						<div class="img__text m--in"></div>
-						<div
-							on:click="{() => {
-								isLoggingIn = !isLoggingIn;
-							}}"
-							class="img__btn"
-						>
-							<span class="m--up">Sign Up</span>
-							<span class="m--in">Sign In</span>
-						</div>
 					</div>
 					<div class="form sign-up">
 						<h2>Time to feel like home,</h2>

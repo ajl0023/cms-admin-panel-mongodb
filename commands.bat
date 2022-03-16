@@ -1,2 +1,2 @@
-git add . && git commit -m "added user auth" && git push origin main
+git add . && git commit -m "auth not working on production" && git push origin main
 

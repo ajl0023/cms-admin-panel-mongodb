@@ -44,10 +44,7 @@
 	}
 </script>
 
-<script>
-</script>
-
-{#if $session.status !== 'logged_in'}
+{#if $session.user.status !== 'logged_in'}
 	<AuthModal />
 {:else}
 	<div class="wrapper">

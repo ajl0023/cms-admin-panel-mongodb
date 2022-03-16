@@ -1,5 +1,7 @@
+import { session } from '$app/stores';
 import cookie from 'cookie';
 import { hostName } from 'src/host';
+
 export async function post({ request }) {
 	const new_request = new Request(hostName + '/auth/login', request);
 
@@ -12,6 +14,7 @@ export async function post({ request }) {
 		const new_cookie = cookie.serialize('access_token', token, {
 			path: '/'
 		});
+
 		return {
 			headers: {
 				'set-cookie': [new_cookie]
