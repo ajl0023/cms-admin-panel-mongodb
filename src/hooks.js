@@ -5,32 +5,53 @@ import { hostName } from './host';
 
 export const handle = async ({ event, resolve }) => {
 	//request.clone
+	//request.clone
 
-	if (event.request.url.startsWith('http://localhost:3002/api2')) {
+	if (event.url.pathname === '/api/auth') {
+		const response = await resolve(event, {
+			ssr: false
+		});
+
+		return response;
+	}
+
+	const new_request = new Request(hostName + '/api/logged-in');
+	new_request.headers.append('cookie', event.request.headers.get('cookie'));
+	const check_status = await fetch(new_request);
+
+	if (check_status.status === 200) {
+		event.locals.user = {
+			status: 'logged_in'
+		};
+	} else {
+		event.locals.user = {
+			status: 'logged_out'
+		};
+	}
+
+	if (event.request.url.startsWith(`${hostName}/api2`)) {
 		const new_request = new Request(
-			event.request.url.replace('http://localhost:3002/api2', hostName),
+			event.request.url.replace(`${hostName}/api2`, hostName),
 			event.request
 		);
 
 		// const request_body = await event.request.json();
+
 		const response = await fetch(new_request);
-		console.log(response);
+
+		return response;
+	} else {
+		const response = await resolve(event, {
+			ssr: false
+		});
+
 		return response;
 	}
-	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
-
-	event.locals.userid = cookies.userid || uuid();
-	event.locals.test = cookies.collection;
-
-	//hopefully we can just do something like starts with apiv2 or something and catch the routes here
-	//not sure if thats ok?
-	//catch routes so we can sort of use svelte kit as a gateway or something like that
-
-	const response = await resolve(event, {
-		ssr: false
-	});
-
-	return response;
 };
-export function getSession(event) {}
-export async function externalFetch(request) {}
+export async function handleError({ error, event }) {}
+export function getSession(event) {
+	return event.locals.user ? event.locals.user : {};
+}
+export async function externalFetch(request) {
+	return fetch(request);
+}

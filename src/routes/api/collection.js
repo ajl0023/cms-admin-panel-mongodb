@@ -21,6 +21,7 @@ export async function get({ request }) {
 }
 export async function post({ request }) {
 	// `params.id` comes from [id].js
+
 	const data = await request.json();
 
 	const collection = data.collection;

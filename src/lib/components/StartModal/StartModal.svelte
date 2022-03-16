@@ -40,16 +40,15 @@
 			<button
 				class="btn btn-primary"
 				on:click="{async () => {
-					const res = await fetch('/api/collection', {
+					const res = await axios('/api/collection', {
 						method: 'POST',
-						body: JSON.stringify({
+						data: {
 							collection: selected
-						})
+						}
 					});
 
-					await res.json();
-
 					await goto('/');
+					window.location.reload();
 				}}">Enter</button
 			>
 		</div>

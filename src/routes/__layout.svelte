@@ -1,6 +1,8 @@
 <script context="module">
 	// export const ssr = false;
 	import { browser } from '$app/env';
+	import { page, session } from '$app/stores';
+	import AuthModal from '$lib/components/AuthModal/AuthModal.svelte';
 	import Navbar from '$lib/components/Navbar/Navbar.svelte';
 	import StartModal from '$lib/components/StartModal/StartModal.svelte';
 	import { collectionStore } from '$lib/stores/collectionStore-store';
@@ -9,7 +11,7 @@
 	export const prerender = false;
 
 	export async function load({ fetch, stuff, session }) {
-		if (browser) {
+		if (browser && session.status === 'logged_in') {
 			const collection = await fetch('/api/collection');
 
 			try {
@@ -45,14 +47,18 @@
 <script>
 </script>
 
-<div class="wrapper">
-	{#if !$collectionStore.collection}
-		<StartModal />
-	{:else}
-		<Navbar />
-		<slot />
-	{/if}
-</div>
+{#if $session.status !== 'logged_in'}
+	<AuthModal />
+{:else}
+	<div class="wrapper">
+		{#if !$collectionStore.collection}
+			<StartModal />
+		{:else}
+			<Navbar />
+			<slot />
+		{/if}
+	</div>
+{/if}
 
 <style lang="scss">
 	.wrapper {
