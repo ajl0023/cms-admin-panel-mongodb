@@ -15,7 +15,7 @@
 	export let dragStore;
 	$: {
 		if (img && img.url) {
-			img.url = img.url.replace('https://test12312312356415616.store', hostName) + '?size=true';
+			img.url = img.url + '?size=true';
 		}
 	}
 </script>
