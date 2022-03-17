@@ -29,24 +29,32 @@ var stdin_exports = {};
 __export(stdin_exports, {
   get: () => get
 });
+var import_axios = __toESM(require("axios"));
 var import_cookie = __toESM(require("cookie"));
 var import_host_ef40cb6e = require("../../../chunks/host-ef40cb6e.js");
 async function get({ request }) {
-  const categories = await fetch(new Request(`${import_host_ef40cb6e.h}/api/categories`, request));
-  if (categories.status === 200) {
-    const data = await categories.json();
-    const getCookie = request.headers.get("cookie");
-    if (getCookie) {
-      import_cookie.default.parse(getCookie);
-      {
-        return {
-          body: { categories: data }
-        };
+  const item = true;
+  try {
+    const categories = await (0, import_axios.default)("/ap2/api/categories", {
+      withCredentials: true
+    });
+    if (categories.status === 200) {
+      const data = await categories.json();
+      const getCookie = request.headers.get("cookie");
+      if (getCookie) {
+        const currentCollection = import_cookie.default.parse(getCookie);
+        if (item) {
+          return {
+            body: { categories: data }
+          };
+        }
       }
     }
+  } catch (error) {
+    console.log(error);
+    return {
+      status: error.response.status
+    };
   }
-  return {
-    status: 403
-  };
 }
 module.exports = __toCommonJS(stdin_exports);

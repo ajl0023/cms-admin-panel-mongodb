@@ -48,7 +48,9 @@ __export(stdin_exports, {
   override: () => override
 });
 var import_index_8edc2136 = require("./chunks/index-8edc2136.js");
+var import_axios = require("axios");
 var import_host_ef40cb6e = require("./chunks/host-ef40cb6e.js");
+var import_cookie = __toESM(require("cookie"));
 var __accessCheck = (obj, member, msg) => {
   if (!member.has(obj))
     throw TypeError("Cannot " + msg);
@@ -1228,10 +1230,10 @@ async function load_node({
         } else if (is_root_relative(resolved)) {
           if (opts.credentials !== "omit") {
             uses_credentials = true;
-            const cookie = event.request.headers.get("cookie");
+            const cookie2 = event.request.headers.get("cookie");
             const authorization = event.request.headers.get("authorization");
-            if (cookie) {
-              opts.headers.set("cookie", cookie);
+            if (cookie2) {
+              opts.headers.set("cookie", cookie2);
             }
             if (authorization && !opts.headers.has("authorization")) {
               opts.headers.set("authorization", authorization);
@@ -1254,9 +1256,9 @@ async function load_node({
           }
           if (`.${new URL(requested).hostname}`.endsWith(`.${event.url.hostname}`) && opts.credentials !== "omit") {
             uses_credentials = true;
-            const cookie = event.request.headers.get("cookie");
-            if (cookie)
-              opts.headers.set("cookie", cookie);
+            const cookie2 = event.request.headers.get("cookie");
+            if (cookie2)
+              opts.headers.set("cookie", cookie2);
           }
           const external_request = new Request(requested, opts);
           response = await options.hooks.externalFetch.call(null, external_request);
@@ -1982,21 +1984,36 @@ const handle = async ({ event, resolve: resolve2 }) => {
     });
     return response;
   }
-  const new_request = new Request(import_host_ef40cb6e.h + "/api/logged-in");
-  new_request.headers.append("cookie", event.request.headers.get("cookie"));
-  const check_status = await fetch(new_request);
-  if (check_status.status === 200) {
-    event.locals.user = {
-      status: "logged_in"
-    };
-  } else {
-    event.locals.user = {
-      status: "logged_out"
-    };
-  }
-  if (event.request.url.startsWith(`${import_host_ef40cb6e.h}/api2`)) {
-    const new_request2 = new Request(event.request.url.replace(`${import_host_ef40cb6e.h}/api2`, import_host_ef40cb6e.h), event.request);
-    const response = await fetch(new_request2);
+  if (event.request.url.startsWith(`${event.url.origin}/api2`)) {
+    const cookies = event.request.headers.get("cookie");
+    const headers = new Headers(event.request.headers);
+    const serialized_headers = Object.fromEntries(headers.entries());
+    const new_url = import_host_ef40cb6e.h + event.url.pathname.replace("/api2", "");
+    {
+      serialized_headers.host = "test12312312356415616.store";
+    }
+    if (cookies) {
+      const token = import_cookie.default.parse(cookies).access_token;
+      {
+        serialized_headers.host = "test12312312356415616.store";
+      }
+      if (token) {
+        const new_request = new Request(new_url, __spreadProps(__spreadValues({}, event.request), {
+          headers: __spreadValues({}, serialized_headers)
+        }));
+        const response2 = await fetch(new_request);
+        return response2;
+      }
+    } else {
+      const new_request = new Request(new_url, __spreadProps(__spreadValues({}, event.request), {
+        headers: __spreadValues({}, serialized_headers)
+      }));
+      const response2 = await fetch(new_request);
+      return response2;
+    }
+    const response = await resolve2(event, {
+      ssr: false
+    });
     return response;
   } else {
     const response = await resolve2(event, {

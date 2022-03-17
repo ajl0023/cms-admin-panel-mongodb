@@ -14,10 +14,8 @@
 	export let set_id;
 	export let dragStore;
 	$: {
-		if (img) {
-			if (dev) {
-				img.url = img.url.replace('https://test12312312356415616.store', hostName) + '?size=true';
-			}
+		if (img && img.url) {
+			img.url = img.url.replace('https://test12312312356415616.store', hostName) + '?size=true';
 		}
 	}
 </script>

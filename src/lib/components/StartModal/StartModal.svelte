@@ -7,6 +7,7 @@
 	import axios from 'axios';
 	import { collectionStore } from '$lib/stores/collectionStore-store';
 	import { goto } from '$app/navigation';
+	import { hostName } from 'src/host';
 	export let pages;
 	let selected;
 	onMount(async () => {});
@@ -48,7 +49,7 @@
 					});
 
 					await goto('/');
-					window.location.reload();
+					// window.location.reload();
 				}}">Enter</button
 			>
 		</div>

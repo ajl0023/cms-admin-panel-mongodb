@@ -54,11 +54,11 @@
     "isEntry": true,
     "imports": [
       "_index-8edc2136.js",
+      "_host-ef40cb6e.js",
       "_category-store-f1dd20e6.js",
       "src/lib/components/StartModal/StartModal.svelte",
       "src/lib/components/Navbar/Navbar.svelte",
-      "_AuthModal-9e0286b4.js",
-      "_host-ef40cb6e.js"
+      "src/lib/components/AuthModal/AuthModal.svelte"
     ],
     "css": [
       "assets/entries/pages/__layout.svelte-69e233e0.css"
@@ -94,7 +94,7 @@
     "isEntry": true,
     "imports": [
       "_index-8edc2136.js",
-      "__page_-97ef0df6.js",
+      "__page_-19ce8e2a.js",
       "_category-store-f1dd20e6.js",
       "_host-ef40cb6e.js"
     ]
@@ -137,8 +137,9 @@
       "assets/Navbar-71f5a330.css"
     ]
   },
-  "_AuthModal-9e0286b4.js": {
-    "file": "chunks/AuthModal-9e0286b4.js",
+  "src/lib/components/AuthModal/AuthModal.svelte": {
+    "file": "chunks/AuthModal-d9974043.js",
+    "src": "src/lib/components/AuthModal/AuthModal.svelte",
     "isDynamicEntry": true,
     "imports": [
       "_index-8edc2136.js",
@@ -148,19 +149,18 @@
       "assets/AuthModal-d06097f5.css"
     ]
   },
-  "__page_-97ef0df6.js": {
-    "file": "chunks/_page_-97ef0df6.js",
+  "__page_-19ce8e2a.js": {
+    "file": "chunks/_page_-19ce8e2a.js",
     "imports": [
       "_index-8edc2136.js",
       "_category-store-f1dd20e6.js",
       "_host-ef40cb6e.js"
     ],
     "dynamicImports": [
-      "_AuthModal-9e0286b4.js",
+      "src/lib/components/AuthModal/AuthModal.svelte",
       "src/lib/components/Bts/Bts.svelte",
       "src/lib/components/CarouselRenders/CarouselRenders.svelte",
       "src/lib/components/CategoryImage/CategoryImage.svelte",
-      "src/lib/components/ConfirmDelete/ConfirmDelete.svelte",
       "src/lib/components/ImagePage/ImagePage.svelte",
       "src/lib/components/ImagesContainer/ImagesContainer.svelte",
       "src/lib/components/MobilePages/MobilePages.svelte",
@@ -173,13 +173,13 @@
     ]
   },
   "src/lib/components/Bts/Bts.svelte": {
-    "file": "chunks/Bts-f9cfad0c.js",
+    "file": "chunks/Bts-26d01131.js",
     "src": "src/lib/components/Bts/Bts.svelte",
     "isDynamicEntry": true,
     "imports": [
       "_index-8edc2136.js",
       "_category-store-f1dd20e6.js",
-      "__page_-97ef0df6.js",
+      "__page_-19ce8e2a.js",
       "_host-ef40cb6e.js",
       "src/lib/components/CategoryImage/CategoryImage.svelte",
       "src/lib/components/ImagesContainer/ImagesContainer.svelte"
@@ -189,12 +189,12 @@
     ]
   },
   "src/lib/components/CategoryImage/CategoryImage.svelte": {
-    "file": "chunks/CategoryImage-1b185851.js",
+    "file": "chunks/CategoryImage-7381a9d7.js",
     "src": "src/lib/components/CategoryImage/CategoryImage.svelte",
     "isDynamicEntry": true,
     "imports": [
       "_index-8edc2136.js",
-      "__page_-97ef0df6.js",
+      "__page_-19ce8e2a.js",
       "_host-ef40cb6e.js",
       "_category-store-f1dd20e6.js"
     ],
@@ -203,14 +203,14 @@
     ]
   },
   "src/lib/components/ImagesContainer/ImagesContainer.svelte": {
-    "file": "chunks/ImagesContainer-1ac3102c.js",
+    "file": "chunks/ImagesContainer-7b0a7934.js",
     "src": "src/lib/components/ImagesContainer/ImagesContainer.svelte",
     "isDynamicEntry": true,
     "imports": [
       "_index-8edc2136.js",
       "_category-store-f1dd20e6.js",
       "src/lib/components/CategoryImage/CategoryImage.svelte",
-      "__page_-97ef0df6.js",
+      "__page_-19ce8e2a.js",
       "_host-ef40cb6e.js"
     ],
     "css": [
@@ -218,13 +218,13 @@
     ]
   },
   "src/lib/components/CarouselRenders/CarouselRenders.svelte": {
-    "file": "chunks/CarouselRenders-dd4b5c5c.js",
+    "file": "chunks/CarouselRenders-ea5f9faa.js",
     "src": "src/lib/components/CarouselRenders/CarouselRenders.svelte",
     "isDynamicEntry": true,
     "imports": [
       "_index-8edc2136.js",
       "_category-store-f1dd20e6.js",
-      "__page_-97ef0df6.js",
+      "__page_-19ce8e2a.js",
       "_host-ef40cb6e.js",
       "src/lib/components/CategoryImage/CategoryImage.svelte",
       "src/lib/components/ImagesContainer/ImagesContainer.svelte"
@@ -233,34 +233,26 @@
       "assets/CarouselRenders-b654edb7.css"
     ]
   },
-  "src/lib/components/ConfirmDelete/ConfirmDelete.svelte": {
-    "file": "chunks/ConfirmDelete-3654c2c1.js",
-    "src": "src/lib/components/ConfirmDelete/ConfirmDelete.svelte",
-    "isDynamicEntry": true,
-    "imports": [
-      "_index-8edc2136.js"
-    ]
-  },
   "src/lib/components/ImagePage/ImagePage.svelte": {
-    "file": "chunks/ImagePage-dc458401.js",
+    "file": "chunks/ImagePage-f87868a1.js",
     "src": "src/lib/components/ImagePage/ImagePage.svelte",
     "isDynamicEntry": true,
     "imports": [
       "_index-8edc2136.js",
       "_category-store-f1dd20e6.js",
       "src/lib/components/CategoryImage/CategoryImage.svelte",
-      "__page_-97ef0df6.js",
+      "__page_-19ce8e2a.js",
       "_host-ef40cb6e.js"
     ]
   },
   "src/lib/components/MobilePages/MobilePages.svelte": {
-    "file": "chunks/MobilePages-1811168e.js",
+    "file": "chunks/MobilePages-c0cbf9b4.js",
     "src": "src/lib/components/MobilePages/MobilePages.svelte",
     "isDynamicEntry": true,
     "imports": [
       "_index-8edc2136.js",
       "_category-store-f1dd20e6.js",
-      "__page_-97ef0df6.js",
+      "__page_-19ce8e2a.js",
       "src/lib/components/ImagesContainer/ImagesContainer.svelte",
       "_host-ef40cb6e.js",
       "src/lib/components/CategoryImage/CategoryImage.svelte"
@@ -270,14 +262,14 @@
     ]
   },
   "src/lib/components/PageCarousels/PageCarousels.svelte": {
-    "file": "chunks/PageCarousels-6d87c242.js",
+    "file": "chunks/PageCarousels-3d3b5c98.js",
     "src": "src/lib/components/PageCarousels/PageCarousels.svelte",
     "isDynamicEntry": true,
     "imports": [
       "_index-8edc2136.js",
       "_category-store-f1dd20e6.js",
       "_host-ef40cb6e.js",
-      "__page_-97ef0df6.js",
+      "__page_-19ce8e2a.js",
       "src/lib/components/ImagesContainer/ImagesContainer.svelte",
       "src/lib/components/CategoryImage/CategoryImage.svelte"
     ]

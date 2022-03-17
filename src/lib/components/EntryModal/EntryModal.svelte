@@ -49,12 +49,13 @@
 
 		const endpoint_data = $entryModalStore.endpoint;
 
-		await axios('/api2' + endpoint_data.route, {
+		await axios(`/api2${endpoint_data.route}`, {
 			method: endpoint_data.method,
-			data: data
+			data: data,
+			withCredentials: true
 		});
 
-		window.location.reload();
+		// window.location.reload();
 	};
 </script>
 

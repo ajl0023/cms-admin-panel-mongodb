@@ -40,10 +40,11 @@ async function get({ request }) {
         body: { collection: currentCollection }
       };
     }
+  } else {
+    return {
+      status: 403
+    };
   }
-  return {
-    status: 403
-  };
 }
 async function post({ request }) {
   const data = await request.json();
@@ -54,7 +55,9 @@ async function post({ request }) {
     };
   }
   const new_cookie = import_cookie.default.serialize("collection", collection, {
-    path: "/"
+    path: "/",
+    sameSite: "none",
+    secure: true
   });
   return {
     headers: {

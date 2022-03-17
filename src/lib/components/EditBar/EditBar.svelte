@@ -7,6 +7,7 @@
 
 	import { entryModalStore } from '$lib/stores/entryModalStore';
 	import axios from 'axios';
+	import { hostName } from 'src/host';
 	import { tick } from 'svelte';
 
 	export let options;
@@ -58,7 +59,7 @@
 									_id: data._id
 								};
 								request_body['phase'] = data.phase;
-								await axios('/api2' + del_route.route, {
+								await axios(hostName + del_route.route, {
 									method: del_route.method,
 									data: request_body
 								});
@@ -106,7 +107,7 @@
 						if (data.page === 'behind-the-scenes') {
 							request_data['phase'] = data.phase;
 						}
-						await axios('/api2' + option.route, {
+						await axios(hostName + option.route, {
 							method: option.method,
 							data: request_data
 						});

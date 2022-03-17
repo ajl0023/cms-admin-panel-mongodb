@@ -7,16 +7,20 @@
 	export async function load({ params, fetch, session, stuff }) {
 		const page_id = params.page;
 		const categories = get(collectionStore).categories;
+
 		const category = categories[page_id];
 		categoryStore.update((s) => {
 			s.category = category;
 			return s;
 		});
-		const res = await fetch(`/api/category?category=${category.category}`);
-		const data = await res.json();
+
+		const res = await axios(`/api2/api/${category.category}`, {
+			withCredentials: true
+		});
+
 		return {
 			props: {
-				data,
+				data: res.data,
 				category: category.category
 			}
 		};
@@ -29,6 +33,8 @@
 	import { deleteHook } from '$lib/stores/deleteHook-store';
 	import SelectedBar from '$lib/components/SelectedBar/SelectedBar.svelte';
 	import EditBar from '$lib/components/EditBar/EditBar.svelte';
+	import { hostName } from 'src/host';
+	import axios from 'axios';
 
 	export let data;
 	export let category;

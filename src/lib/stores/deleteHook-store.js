@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { hostName } from 'src/host';
 import { get, writable } from 'svelte/store';
 import { categoryStore } from './category-store';
 import { collectionStore } from './collectionStore-store';
@@ -22,6 +23,7 @@ const store = () => {
 			const promises = [];
 			update((s) => {
 				const category = get(categoryStore).category;
+				console.log(category)
 				const isBts = get(categoryStore);
 				const del_route = category.endpoints.find((item) => {
 					return item.method === 'DELETE' && item.type === 'media';
@@ -43,13 +45,15 @@ const store = () => {
 					}
 					return acc;
 				}, {});
+				
 				promises.push(
-					axios('/api2' + del_route.route, {
+					axios(hostName + del_route.route, {
 						method: 'DELETE',
 						data: {
 							deleted: deleted_items_toObj,
 							category: category.category
-						}
+						},
+						withCredentials: true
 					})
 				);
 				return s;
@@ -79,8 +83,9 @@ const store = () => {
 						const element = deleted_items_toObj[page_id];
 
 						promises.push(
-							axios('/api2' + element.route, {
+							axios(hostName + element.route, {
 								method: 'DELETE',
+								withCredentials: true,
 								data: {
 									deleted: {
 										[page_id]: element.items

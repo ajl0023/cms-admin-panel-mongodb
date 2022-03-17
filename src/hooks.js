@@ -1,4 +1,8 @@
-import { hostName } from './host';
+import axios from 'axios';
+import { hostName, mock_dev } from './host';
+
+import cookie from 'cookie';
+import { dev } from '$app/env';
 
 export const handle = async ({ event, resolve }) => {
 	if (event.url.pathname === '/api/auth') {
@@ -9,30 +13,49 @@ export const handle = async ({ event, resolve }) => {
 		return response;
 	}
 
-	const new_request = new Request(hostName + '/api/logged-in');
-	new_request.headers.append('cookie', event.request.headers.get('cookie'));
-	const check_status = await fetch(new_request);
+	if (event.request.url.startsWith(`${event.url.origin}/api2`)) {
+		const cookies = event.request.headers.get('cookie');
+		const headers = new Headers(event.request.headers);
+		const serialized_headers = Object.fromEntries(headers.entries());
+		const new_url = hostName + event.url.pathname.replace('/api2', '');
+		if (!mock_dev || !dev) {
+			serialized_headers.host = 'test12312312356415616.store';
+		}
+		if (cookies) {
+			const token = cookie.parse(cookies).access_token;
 
-	if (check_status.status === 200) {
-		event.locals.user = {
-			status: 'logged_in'
-		};
-	} else {
-		event.locals.user = {
-			status: 'logged_out'
-		};
-	}
+			if (!mock_dev || !dev) {
+				serialized_headers.host = 'test12312312356415616.store';
+			}
 
-	if (event.request.url.startsWith(`${hostName}/api2`)) {
-		const new_request = new Request(
-			event.request.url.replace(`${hostName}/api2`, hostName),
-			event.request
-		);
+			if (token) {
+				const new_request = new Request(new_url, {
+					...event.request,
+					headers: {
+						...serialized_headers
+					}
+				});
 
-		// const request_body = await event.request.json();
+				const response = await fetch(new_request);
 
-		const response = await fetch(new_request);
+				return response;
+			}
+		} else {
+			const new_request = new Request(new_url, {
+				...event.request,
+				headers: {
+					...serialized_headers
+				}
+			});
 
+			const response = await fetch(new_request);
+
+			return response;
+		}
+
+		const response = await resolve(event, {
+			ssr: false
+		});
 		return response;
 	} else {
 		const response = await resolve(event, {

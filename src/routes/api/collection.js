@@ -13,11 +13,11 @@ export async function get({ request }) {
 				body: { collection: currentCollection }
 			};
 		}
+	} else {
+		return {
+			status: 403
+		};
 	}
-
-	return {
-		status: 403
-	};
 }
 export async function post({ request }) {
 	// `params.id` comes from [id].js
@@ -32,7 +32,9 @@ export async function post({ request }) {
 		};
 	}
 	const new_cookie = cookie.serialize('collection', collection, {
-		path: '/'
+		path: '/',
+		sameSite: 'none',
+		secure: true
 	});
 
 	return {

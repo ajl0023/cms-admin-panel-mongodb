@@ -28,36 +28,64 @@ var __toCommonJS = /* @__PURE__ */ ((cache) => {
 var stdin_exports = {};
 __export(stdin_exports, {
   default: () => _layout,
-  load: () => load,
-  prerender: () => prerender
+  load: () => load
 });
 var import_index_8edc2136 = require("../../chunks/index-8edc2136.js");
+var import_host_ef40cb6e = require("../../chunks/host-ef40cb6e.js");
+var import_axios = require("axios");
 var import_category_store_f1dd20e6 = require("../../chunks/category-store-f1dd20e6.js");
 var import_StartModal_33665079 = __toESM(require("../../chunks/StartModal-33665079.js"));
 var import_Navbar_7d75c8fa = __toESM(require("../../chunks/Navbar-7d75c8fa.js"));
-var import_AuthModal_9e0286b4 = require("../../chunks/AuthModal-9e0286b4.js");
-var import_host_ef40cb6e = require("../../chunks/host-ef40cb6e.js");
-var import_axios = require("axios");
+var import_AuthModal_d9974043 = __toESM(require("../../chunks/AuthModal-d9974043.js"));
 var import_lodash = require("lodash");
+const getStores = () => {
+  const stores = (0, import_index_8edc2136.g)("__svelte__");
+  return {
+    page: {
+      subscribe: stores.page.subscribe
+    },
+    navigating: {
+      subscribe: stores.navigating.subscribe
+    },
+    get preloading() {
+      console.error("stores.preloading is deprecated; use stores.navigating instead");
+      return {
+        subscribe: stores.navigating.subscribe
+      };
+    },
+    session: stores.session,
+    updated: stores.updated
+  };
+};
+const throw_error = (verb) => {
+  throw new Error(`Can only ${verb} session store in browser`);
+};
+const session = {
+  subscribe(fn) {
+    const store = getStores().session;
+    return store.subscribe(fn);
+  },
+  set: () => throw_error("set"),
+  update: () => throw_error("update")
+};
 var global = "";
 var __layout_svelte_svelte_type_style_lang = "";
 const css = {
   code: ".wrapper.svelte-hkifws{overflow-y:auto;height:100%;display:flex}",
   map: null
 };
-const prerender = false;
 async function load({ fetch, stuff, session: session2 }) {
   return {};
 }
 const _layout = (0, import_index_8edc2136.c)(($$result, $$props, $$bindings, slots) => {
   let $session, $$unsubscribe_session;
   let $collectionStore, $$unsubscribe_collectionStore;
-  $$unsubscribe_session = (0, import_index_8edc2136.a)(import_AuthModal_9e0286b4.s, (value) => $session = value);
+  $$unsubscribe_session = (0, import_index_8edc2136.a)(session, (value) => $session = value);
   $$unsubscribe_collectionStore = (0, import_index_8edc2136.a)(import_category_store_f1dd20e6.c, (value) => $collectionStore = value);
   $$result.css.add(css);
   $$unsubscribe_session();
   $$unsubscribe_collectionStore();
-  return `${$session.user.status !== "logged_in" ? `${(0, import_index_8edc2136.v)(import_AuthModal_9e0286b4.A, "AuthModal").$$render($$result, {}, {}, {})}` : `<div class="${"wrapper svelte-hkifws"}">${!$collectionStore.collection ? `${(0, import_index_8edc2136.v)(import_StartModal_33665079.default, "StartModal").$$render($$result, {}, {}, {})}` : `${(0, import_index_8edc2136.v)(import_Navbar_7d75c8fa.default, "Navbar").$$render($$result, {}, {}, {})}
+  return `${$session.user.status !== "logged_in" ? `${(0, import_index_8edc2136.v)(import_AuthModal_d9974043.default, "AuthModal").$$render($$result, {}, {}, {})}` : `<div class="${"wrapper svelte-hkifws"}">${!$collectionStore.collection ? `${(0, import_index_8edc2136.v)(import_StartModal_33665079.default, "StartModal").$$render($$result, {}, {}, {})}` : `${(0, import_index_8edc2136.v)(import_Navbar_7d75c8fa.default, "Navbar").$$render($$result, {}, {}, {})}
 			${slots.default ? slots.default({}) : ``}`}</div>`}`;
 });
 module.exports = __toCommonJS(stdin_exports);
