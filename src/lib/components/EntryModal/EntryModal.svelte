@@ -53,7 +53,7 @@
 
 		await axios(`/api2${endpoint_data.route}`, {
 			method: endpoint_data.method,
-			data: _data,
+			data: data,
 			withCredentials: true
 		});
 		in_request = false;
