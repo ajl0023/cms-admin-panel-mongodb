@@ -10,9 +10,7 @@
 	export let img;
 	export let page;
 	export let column;
-	export let index;
-	export let set_id;
-	export let dragStore;
+
 	$: {
 		if (img && img.url) {
 			img.url = img.url + '?size=true';
@@ -24,21 +22,6 @@
 	<div
 		class:thumbs="{column === 'thumbs'}"
 		class="image-container"
-		on:dragstart="{(e) => {
-			if (dragStore) {
-				dragStore.dragStart(e, img, index, set_id);
-			}
-		}}"
-		on:dragover="{(e) => {
-			if (dragStore) {
-				dragStore.dragover(index);
-			}
-		}}"
-		on:dragend="{(e) => {
-			if (dragStore) {
-				dragStore.dragend(e);
-			}
-		}}"
 		on:click="{() => {
 			deleteHook.addItem({
 				image_id: img._id,

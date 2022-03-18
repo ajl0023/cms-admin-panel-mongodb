@@ -18,7 +18,6 @@
 					<ImagesContainer
 						options="{$categoryStore.category.endpoints}"
 						set_name="{page.page}"
-						set_id="{uuidv4()}"
 						images="{page.images}"
 						page="{page}"
 					/>

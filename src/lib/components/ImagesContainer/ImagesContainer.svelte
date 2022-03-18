@@ -2,10 +2,14 @@
 </script>
 
 <script>
+	import DragDropList from 'svelte-dragdroplist';
 	import { drag_store } from '$lib/stores/dragStore';
 	import _ from 'lodash';
 	import CategoryImage from '../CategoryImage/CategoryImage.svelte';
 	import EditBar from '../EditBar/EditBar.svelte';
+	import { dndzone, overrideItemIdKeyNameBeforeInitialisingDndZones } from 'svelte-dnd-action';
+	overrideItemIdKeyNameBeforeInitialisingDndZones('_id');
+
 	export let images;
 	export let page;
 	export let set_id;
@@ -13,19 +17,17 @@
 	export let set_name;
 	export let options;
 	const dragStore = drag_store();
-	$: {
-		if ($dragStore.draggingItemIndex !== null && $dragStore.hoveredItemIndex !== null) {
-			[images[$dragStore.draggingItemIndex], images[$dragStore.hoveredItemIndex]] = [
-				images[$dragStore.hoveredItemIndex],
-				images[$dragStore.draggingItemIndex]
-			];
-
-			$dragStore.draggingItemIndex = $dragStore.hoveredItemIndex;
-		}
-	}
 	images = images.sort((a, b) => {
 		return a.order - b.order;
 	});
+
+	function handleDndConsider(e) {
+		images = e.detail.items;
+		$dragStore.is_editing = true;
+	}
+	function handleDndFinalize(e) {
+		images = e.detail.items;
+	}
 </script>
 
 <div class="wrapper">
@@ -34,9 +36,9 @@
 		<div class="list-group"></div>
 		<div class="edit-bar">
 			<EditBar
+				dragStore="{dragStore}"
 				images="{images}"
 				belongs_to="document"
-				dragStore="{dragStore}"
 				data="{page}"
 				column="{column}"
 				set_id="{set_id}"
@@ -45,16 +47,16 @@
 		</div>
 	</div>
 
-	<div class="item-container">
-		{#each images as img, i}
-			<CategoryImage
-				dragStore="{dragStore}"
-				set_id="{set_id}"
-				index="{i}"
-				img="{img}"
-				page="{page}"
-				column="{column}"
-			/>
+	<div
+		on:consider="{handleDndConsider}"
+		on:finalize="{handleDndFinalize}"
+		use:dndzone="{{ items: images, flipDurationMs: 20, dropFromOthersDisabled: true }}"
+		class="item-container"
+	>
+		{#each images as img, i (img._id)}
+			<div class="drag-container">
+				<CategoryImage set_id="{set_id}" index="{i}" img="{img}" page="{page}" column="{column}" />
+			</div>
 		{/each}
 	</div>
 </div>

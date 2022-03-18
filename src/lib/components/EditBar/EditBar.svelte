@@ -12,10 +12,10 @@
 
 	export let options;
 	export let data;
-	export let set_id;
+
 	export let dragStore;
 	export let column;
-	export let is_editing;
+
 	export let belongs_to;
 	export let images;
 	let selected;
