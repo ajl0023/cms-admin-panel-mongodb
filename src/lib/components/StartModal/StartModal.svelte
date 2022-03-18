@@ -41,15 +41,16 @@
 			<button
 				class="btn btn-primary"
 				on:click="{async () => {
-					const res = await axios('/api/collection', {
-						method: 'POST',
-						data: {
-							collection: selected
-						}
-					});
-
-					await goto('/');
-					// window.location.reload();
+					try {
+						const res = await axios('/api/collection', {
+							method: 'POST',
+							data: {
+								collection: selected
+							}
+						});
+						await goto('/');
+						window.location.reload();
+					} catch (error) {}
 				}}">Enter</button
 			>
 		</div>

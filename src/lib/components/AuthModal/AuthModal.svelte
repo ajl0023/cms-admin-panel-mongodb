@@ -23,11 +23,11 @@
 				method: 'POST'
 			});
 		}
-		// if (res.status === 200) {
-		// 	$session.user = {
-		// 		status: 'logged_in'
-		// 	};
-		// }
+		if (res.status === 200) {
+			$session.user = {
+				status: 'logged_in'
+			};
+		}
 	};
 </script>
 
