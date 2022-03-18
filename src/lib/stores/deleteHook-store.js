@@ -23,7 +23,7 @@ const store = () => {
 			const promises = [];
 			update((s) => {
 				const category = get(categoryStore).category;
-				console.log(category)
+				console.log(category);
 				const isBts = get(categoryStore);
 				const del_route = category.endpoints.find((item) => {
 					return item.method === 'DELETE' && item.type === 'media';
@@ -45,9 +45,9 @@ const store = () => {
 					}
 					return acc;
 				}, {});
-				
+
 				promises.push(
-					axios(hostName + del_route.route, {
+					axios('/api2' + del_route.route, {
 						method: 'DELETE',
 						data: {
 							deleted: deleted_items_toObj,
@@ -83,7 +83,7 @@ const store = () => {
 						const element = deleted_items_toObj[page_id];
 
 						promises.push(
-							axios(hostName + element.route, {
+							axios('/api2' + element.route, {
 								method: 'DELETE',
 								withCredentials: true,
 								data: {

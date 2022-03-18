@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { hostName, mock_dev } from './host';
-
+import FormData from 'form-data';
 import cookie from 'cookie';
 import { dev } from '$app/env';
 
@@ -29,16 +29,40 @@ export const handle = async ({ event, resolve }) => {
 			}
 
 			if (token) {
-				const new_request = new Request(new_url, {
-					...event.request,
-					headers: {
-						...serialized_headers
+				if (event.request.method === 'GET') {
+					const new_request = new Request(new_url, {
+						...event.request,
+						headers: {
+							...serialized_headers
+						}
+					});
+
+					const response = await fetch(new_request);
+
+					return response;
+				} else {
+					let body;
+					if (serialized_headers['content-type'].includes('multipart/form-data')) {
+						delete serialized_headers['content-type'];
+						body = await event.request.formData();
+					} else {
+						body = await event.request.json();
+						body = JSON.stringify(body);
 					}
-				});
 
-				const response = await fetch(new_request);
+					const new_request = new Request(new_url, {
+						headers: {
+							...serialized_headers
+						},
+						body: body,
 
-				return response;
+						method: event.request.method
+					});
+
+					const response = await fetch(new_request);
+
+					return response;
+				}
 			}
 		} else {
 			const new_request = new Request(new_url, {

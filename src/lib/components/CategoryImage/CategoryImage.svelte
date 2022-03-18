@@ -25,13 +25,19 @@
 		class:thumbs="{column === 'thumbs'}"
 		class="image-container"
 		on:dragstart="{(e) => {
-			dragStore.dragStart(e, img, index, set_id);
+			if (dragStore) {
+				dragStore.dragStart(e, img, index, set_id);
+			}
 		}}"
 		on:dragover="{(e) => {
-			dragStore.dragover(index);
+			if (dragStore) {
+				dragStore.dragover(index);
+			}
 		}}"
 		on:dragend="{(e) => {
-			dragStore.dragend(e);
+			if (dragStore) {
+				dragStore.dragend(e);
+			}
 		}}"
 		on:click="{() => {
 			deleteHook.addItem({

@@ -1,2 +1,2 @@
-git add . && git commit -m "server issues/https issues/proxy issues all fixed...." && git push origin main
+git add . && git commit -m "fixed a few header issues" && git push origin main
 

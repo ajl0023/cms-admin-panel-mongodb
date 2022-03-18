@@ -10,7 +10,9 @@ const config = {
 		adapter: adapter({ split: false }),
 
 		vite: {
-			optimizeDeps: {},
+			optimizeDeps: {
+				include: ['form-data']
+			},
 			resolve: {
 				alias: {
 					src: path.resolve('./src')
