@@ -1,2 +1,2 @@
-git add . && git commit -m "fixed a few header issues" && git push origin main
+git add . && git commit -m "some visual errors" && git push origin main
 

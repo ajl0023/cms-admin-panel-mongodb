@@ -9,14 +9,16 @@
 	import axios from 'axios';
 	import { externalFetch } from 'src/hooks';
 	import { hostName } from 'src/host';
-
+	import _ from 'lodash';
 	import { onMount } from 'svelte';
 
 	let fields = [];
 
 	const inputs = {};
 	let form;
-	//IF INSERTABLE USE INSERTABLE ENDPOINTS ///  /SEF /DFSDKOLF SDJFNKL;DNJFKL; NKSADKFN ASL;DFKLASDNF KASNF;KL N
+	let files = [];
+	let total_size = 0;
+	let in_request = false;
 	onMount(async () => {
 		const currentTable = $categoryStore.category;
 
@@ -41,22 +43,28 @@
 
 	const handleSubmit = async () => {
 		const data = new FormData(form);
+		const endpoint_data = $entryModalStore.endpoint;
+		in_request = true;
 		data.append('category', $entryModalStore.selected.category);
 		data.append('_id', $entryModalStore.selected._id);
 		if ($entryModalStore.selected.page === 'behind-the-scenes') {
 			data.append('phase', $entryModalStore.selected.phase);
 		}
 
-		const endpoint_data = $entryModalStore.endpoint;
-
 		await axios(`/api2${endpoint_data.route}`, {
 			method: endpoint_data.method,
-			data: data,
+			data: _data,
 			withCredentials: true
 		});
-
-		// window.location.reload();
+		in_request = false;
+		window.location.reload();
 	};
+	$: {
+		for (let i = 0; i < files.length; i++) {
+			const element = files[i];
+			total_size += element.size;
+		}
+	}
 </script>
 
 <div
@@ -77,6 +85,7 @@
 					<div class="form-field">
 						<label for="{field.name}" class="form-label">{field.client_label}</label>
 						<input
+							bind:files
 							class="form-control"
 							type="file"
 							name="{field.name}"
@@ -125,7 +134,14 @@
 			<div class="col-auto">
 				<button on:click="{handleSubmit}" type="button" class="btn btn-primary mb-3">Submit</button>
 			</div>
+			{#if in_request}
+				<div class="spinner-border" role="status"></div>
+			{/if}
 		</form>
+		<div>
+			Total: {_.round(total_size / 1000000, 2)}MB
+		</div>
+		<div>Max is 5MB</div>
 	</div>
 </div>
 

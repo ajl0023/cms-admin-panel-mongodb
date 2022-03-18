@@ -42,6 +42,12 @@ export const handle = async ({ event, resolve }) => {
 					return response;
 				} else {
 					let body;
+					// await new Promise((res, rej) => {
+					// 	setTimeout(() => {
+					// 		res();
+					// 	}, 10000);
+					// });
+					// console.log(232323)
 					if (serialized_headers['content-type'].includes('multipart/form-data')) {
 						delete serialized_headers['content-type'];
 						body = await event.request.formData();
