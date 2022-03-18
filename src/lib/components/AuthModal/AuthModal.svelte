@@ -18,15 +18,15 @@
 		});
 
 		if (foreign_server.status === 200) {
-			await axios('/api/auth', {
+			const res = await axios('/api/auth', {
 				data: foreign_server.data,
 				method: 'POST'
 			});
-		}
-		if (res.status === 200) {
-			$session.user = {
-				status: 'logged_in'
-			};
+			if (res.status === 200) {
+				$session.user = {
+					status: 'logged_in'
+				};
+			}
 		}
 	};
 </script>
